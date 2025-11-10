@@ -1,0 +1,18 @@
+<section class="card">
+  <h1>Crear parte</h1>
+  <p class="muted">Crear nuevo parte de trabajo</p>
+
+  <div style="display:grid; gap:10px; margin-top:12px;">
+    <!-- <app-track-card
+      *ngFor="let t of tracks"
+      [title]="t.title"
+      [artist]="t.artist"
+      [durationSec]="t.durationSec"
+      [liked]="t.liked"
+      (added)="onAddFromCard($event)">
+    </app-track-card> -->
+  </div>
+
+  <p class="muted" *ngIf="lastAdded">Último añadido: {{ lastAdded }}</p>
+</section>
+

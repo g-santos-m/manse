@@ -7,18 +7,33 @@ $input-border-color: #666;  // Borde de los inputs
 $button-color: #3e8e41;     // Verde oscuro para el botón
 $button-hover: #357a38;     // Verde más oscuro para el hover
 $max-width: 900px;          // Máximo de 900px de ancho
+$padding-top: 20px;         // Menos padding en la parte superior
 
 // Estilos globales
-body {
-  font-family: Arial, sans-serif;
+html, body {
   margin: 0;
   padding: 0;
+  height: 100%; // Asegura que ocupemos toda la altura de la ventana
+  width: 100%;  // Asegura que ocupemos toda la anchura de la ventana
+}
+
+body {
+  font-family: Arial, sans-serif;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;  // Asegura que el body ocupe toda la altura de la ventana
-  min-height: 100%; // Garantiza que el body ocupe al menos toda la altura
+  justify-content: center;  // Centrado horizontal
+  align-items: center;      // Centrado vertical
   background-color: $background-color;
+  color: $text-color;
+  min-height: 100vh;        // Ocupa al menos toda la altura de la ventana
+  padding-top: $padding-top; // Reducido padding superior
+  flex-direction: column;   // Permite que el título esté arriba y el formulario abajo
+}
+
+// Estilos para el título
+h1 {
+  text-align: center;
+  margin-top: 0; // Elimina el margen superior para que quede en la parte superior
+  margin-bottom: 20px; // Espacio entre el título y el formulario
   color: $text-color;
 }
 
@@ -30,13 +45,7 @@ form {
   max-width: $max-width; // Máximo de 900px de ancho
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
-  margin: 20px; // Añade margen para que no quede pegado a los bordes
-}
-
-h1 {
-  text-align: center;
-  margin-bottom: 20px;
-  color: $text-color;
+  margin: 0 0 20px 0; // Añade margen en la parte inferior para separar del borde
 }
 
 label {
@@ -50,7 +59,8 @@ label {
 input[type="text"],
 input[type="email"],
 input[type="date"],
-input[type="checkbox"],
+input[type="number"],
+input[type="password"],
 textarea,
 select {
   width: 100%;
@@ -63,12 +73,14 @@ select {
   box-sizing: border-box;
 }
 
+// Estilo para el checkbox (personalizado si es necesario)
 input[type="checkbox"] {
   width: auto;
   display: inline-block;
   margin: 0;
 }
 
+// Estilo para el botón
 input[type="submit"] {
   background-color: $button-color;
   color: white;

@@ -4,9 +4,9 @@ import { RouterLinkActive, RouterLink, RouterOutlet } from '@angular/router';
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, RouterLink, RouterLinkActive],
-  templateUrl: './app.html',
-  styleUrl: './app.scss'
+  templateUrl: './crear-parte.html',
+  styleUrl: './crear-parte.scss'
 })
-export class App {
+export class CrearParte {
   protected readonly title = signal('manse');
 }

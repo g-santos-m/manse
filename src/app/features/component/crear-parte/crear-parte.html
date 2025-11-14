@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario Básico</title>
+</head>
+<body>
+    <h1>Formulario de Contacto</h1>
+
+    <form action="procesar.php" method="POST">
+        <label for="fecha_apertura">Fecha apertura:</label><br>
+        <input type="text" id="fecha_apertura" name="fecha_apertura" required><br><br>
+
+        <label for="fecha_cierre">Fecha cierre:</label><br>
+        <input type="fecha_cierre" id="fecha_cierre" name="fecha_cierre" required><br><br>
+
+        <label for="nombre_cliente">Nombre cliente:</label><br>
+        <input id="nombre_cliente" name="nombre_cliente" required><br><br>
+
+        <label for="direccion_edificio">Dirección edificio:</label><br>
+        <input id="direccion_edificio" name="direccion_edificio" required><br><br>
+
+        <label for="ubicacion_concreta">Ubicación concreta:</label><br>
+        <input id="ubicacion_concreta" name="ubicacion_concreta" required><br><br>
+
+        <label for="contacto_incidencia">Contacto de la persona que reporta la incidencia:</label><br>
+        <input id="contacto_incidencia" name="contacto_incidencia" required><br><br>
+
+        <!--Prioridad de la reparación-->
+        <label for="urgente">
+            <input type="checkbox" id="urgente" name="urgente" required>
+            Urgente
+        </label><br><br>
+        <!--Técnico asignado (desplegable)-->
+        <label for="tecnico">Técnico Asignado:</label><br>
+        <select id="tecnico" name="tecnico" required>
+          <option value="">Seleccione un técnico</option>
+          <option value="tecnico1">Juan Pérez</option>
+          <option value="tecnico2">Ana Gómez</option>
+          <option value="tecnico3">Carlos López</option>
+          <option value="tecnico4">María Rodríguez</option>
+        </select><br><br>
+
+
+        <label for="descripcion_breve">Incidencia (Descripción breve):</label><br>
+        <input id="descripcion_breve" name="descripcion_breve" required><br><br>
+
+        <label for="descripcion_detalle">Incidencia (Detalle):</label><br>
+        <textarea id="descripcion_detalle" name="descripcion_detalle" rows="4" cols="50" required></textarea><br><br>
+
+        <input type="submit" value="Enviar">
+    </form>
+</body>
+</html>

@@ -1,106 +1,55 @@
-<div class="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg mt-10">
-  <h2 class="text-2xl font-bold text-center mb-6 text-indigo-700">
-    Crear Nuevo Parte de Incidencia
-  </h2>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario Básico</title>
+</head>
+<body>
+    <h1>Formulario de Contacto</h1>
 
-  <form [formGroup]="parteForm" (ngSubmit)="onSubmit()" class="space-y-6">
+    <form action="procesar.php" method="POST">
+        <label for="fecha_apertura">Fecha apertura:</label><br>
+        <input type="text" id="fecha_apertura" name="fecha_apertura" required><br><br>
 
-    <!-- Fechas -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <div>
-        <label class="block text-sm font-medium text-gray-700">Fecha de apertura del parte *</label>
-        <input type="date" formControlName="fechaApertura"
-               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-      </div>
-      <div>
-        <label class="block text-sm font-medium text-gray-700">Fecha de cierre del parte</label>
-        <input type="date" formControlName="fechaCierre"
-               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-      </div>
-    </div>
+        <label for="fecha_cierre">Fecha cierre:</label><br>
+        <input type="fecha_cierre" id="fecha_cierre" name="fecha_cierre" required><br><br>
 
-    <!-- Cliente y dirección -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <div>
-        <label class="block text-sm font-medium text-gray-700">Nombre del cliente *</label>
-        <input type="text" formControlName="nombreCliente" placeholder="Ej: Comunidad de Propietarios Sol"
-               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-      </div>
-      <div>
-        <label class="block text-sm font-medium text-gray-700">Dirección del edificio *</label>
-        <input type="text" formControlName="direccionEdificio" placeholder="C/ Mayor, 12, Colmenar Viejo"
-               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-      </div>
-    </div>
+        <label for="nombre_cliente">Nombre cliente:</label><br>
+        <input id="nombre_cliente" name="nombre_cliente" required><br><br>
 
-    <!-- Ubicación y contacto -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <div>
-        <label class="block text-sm font-medium text-gray-700">Ubicación concreta del incidente *</label>
-        <input type="text" formControlName="ubicacionIncidencia" placeholder="Portal 2, 3º B"
-               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-      </div>
-      <div>
-        <label class="block text-sm font-medium text-gray-700">Contacto persona que reporta *</label>
-        <input type="tel" formControlName="contactoReporta" placeholder="612345678"
-               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-      </div>
-    </div>
+        <label for="direccion_edificio">Dirección edificio:</label><br>
+        <input id="direccion_edificio" name="direccion_edificio" required><br><br>
 
-    <!-- Prioridad y técnico -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <div>
-        <label class="block text-sm font-medium text-gray-700">Prioridad de la reparación *</label>
-        <select formControlName="prioridad"
-                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-          <option *ngFor="let p of prioridades" [value]="p">{{ p }}</option>
-        </select>
-      </div>
-      <div>
-        <label class="block text-sm font-medium text-gray-700">Técnico asignado</label>
-        <select formControlName="tecnicoAsignado"
-                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-          <option *ngFor="let t of tecnicos" [value]="t">{{ t }}</option>
-        </select>
-      </div>
-    </div>
+        <label for="ubicacion_concreta">Ubicación concreta:</label><br>
+        <input id="ubicacion_concreta" name="ubicacion_concreta" required><br><br>
 
-    <!-- Descripción breve -->
-    <div>
-      <label class="block text-sm font-medium text-gray-700">
-        Descripción breve (máx. 100 caracteres) *
-      </label>
-      <input type="text" formControlName="descripcionBreve" maxlength="100"
-             placeholder="Ej: Fuga de agua en cuarto de contadores"
-             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-      <p class="text-xs text-gray-500 mt-1">
-        {{ parteForm.get('descripcionBreve')?.value?.length || 0 }}/100
-      </p>
-    </div>
+        <label for="contacto_incidencia">Contacto de la persona que reporta la incidencia:</label><br>
+        <input id="contacto_incidencia" name="contacto_incidencia" required><br><br>
 
-    <!-- Descripción completa -->
-    <div>
-      <label class="block text-sm font-medium text-gray-700">Descripción completa de la incidencia</label>
-      <textarea formControlName="descripcionCompleta" rows="4"
-                placeholder="Detalles adicionales..."
-                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"></textarea>
-    </div>
+        <!--Prioridad de la reparación-->
+        <label for="urgente">
+            <input type="checkbox" id="urgente" name="urgente" required>
+            Urgente
+        </label><br><br>
+        <!--Técnico asignado (desplegable)-->
+        <label for="tecnico">Técnico Asignado:</label><br>
+        <select id="tecnico" name="tecnico" required>
+          <option value="">Seleccione un técnico</option>
+          <option value="tecnico1">Juan Pérez</option>
+          <option value="tecnico2">Ana Gómez</option>
+          <option value="tecnico3">Carlos López</option>
+          <option value="tecnico4">María Rodríguez</option>
+        </select><br><br>
 
-    <!-- Trabajos realizados -->
-    <div>
-      <label class="block text-sm font-medium text-gray-700">Trabajos realizados para la solución</label>
-      <textarea formControlName="trabajosRealizados" rows="5"
-                placeholder="Describe las actuaciones realizadas..."
-                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"></textarea>
-    </div>
 
-    <!-- Botón -->
-    <div class="text-center">
-      <button type="submit"
-              [disabled]="parteForm.invalid"
-              class="inline-flex justify-center py-3 px-8 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed">
-        Guardar Parte
-      </button>
-    </div>
-  </form>
-</div>
+        <label for="descripcion_breve">Incidencia (Descripción breve):</label><br>
+        <input id="descripcion_breve" name="descripcion_breve" required><br><br>
+
+        <label for="descripcion_detalle">Incidencia (Detalle):</label><br>
+        <textarea id="descripcion_detalle" name="descripcion_detalle" rows="4" cols="50" required></textarea><br><br>
+
+        <input type="submit" value="Enviar">
+    </form>
+</body>
+</html>

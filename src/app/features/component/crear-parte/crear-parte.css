@@ -1,0 +1,93 @@
+/* Estilos globales */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Asegura que el body ocupe toda la altura de la ventana */
+  min-height: 100%; /* Garantiza que el body ocupe al menos toda la altura */
+  /* Reemplazo de $background-color */
+  background-color: #2d2d2d; 
+  /* Reemplazo de $text-color */
+  color: #f0f0f0;
+}
+
+/* Estilos para el formulario */
+form {
+  /* Reemplazo de $form-background */
+  background-color: #333;
+  /* Aumenta el padding para darle más espacio alrededor del formulario */
+  padding: 30px;
+  width: 100%;
+  /* Reemplazo de $max-width */
+  max-width: 900px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  /* Añade margen para que no quede pegado a los bordes */
+  margin: 20px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  /* Reemplazo de $text-color */
+  color: #f0f0f0;
+}
+
+label {
+  font-size: 16px;
+  margin-bottom: 5px;
+  display: block;
+  /* Reemplazo de $text-color */
+  color: #f0f0f0;
+}
+
+/* Estilo de los campos de entrada y textarea */
+input[type="text"],
+input[type="email"],
+input[type="date"],
+input[type="checkbox"],
+textarea,
+select {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0 16px 0;
+  /* Reemplazo de $input-border-color */
+  border: 1px solid #666;
+  border-radius: 4px;
+  /* Reemplazo de $input-background */
+  background-color: #444;
+  /* Reemplazo de $text-color */
+  color: #f0f0f0;
+  box-sizing: border-box;
+}
+
+input[type="checkbox"] {
+  width: auto;
+  display: inline-block;
+  margin: 0;
+}
+
+input[type="submit"] {
+  /* Reemplazo de $button-color */
+  background-color: #3e8e41;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 4px;
+  width: 100%;
+}
+
+input[type="submit"]:hover {
+  /* Reemplazo de $button-hover */
+  background-color: #357a38;
+}
+
+/* Estilo para el textarea */
+textarea {
+  resize: vertical;
+}

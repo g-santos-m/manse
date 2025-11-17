@@ -1,0 +1,133 @@
+// ===== VARIABLES (mismas que tu formulario) =====
+$background-color: #2d2d2d;
+$form-background: #333;
+$text-color: #f0f0f0;
+$input-background: #444;
+$input-border-color: #666;
+$button-color: #3e8e41;
+$button-hover: #357a38;
+$max-width: 900px;
+$padding-top: 20px;
+
+// ===== ESTILOS GLOBALES DEL COMPONENTE =====
+:host {
+  display: block;
+  min-height: 100vh;
+  background-color: $background-color;
+  color: $text-color;
+  padding: $padding-top 20px;
+  font-family: Arial, sans-serif;
+}
+
+// ===== TÍTULO =====
+h1 {
+  text-align: center;
+  margin: 0 0 30px 0;
+  color: $text-color;
+  font-size: 2rem;
+}
+
+// ===== CONTENEDOR PRINCIPAL (mismo look que el form) =====
+.detalle {
+  background-color: $form-background;
+  padding: 40px;
+  width: 100%;
+  max-width: $max-width;
+  margin: 0 auto 40px auto;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+}
+
+// ===== CADA CAMPO =====
+.campo {
+  margin-bottom: 24px;
+}
+
+.campo label {
+  display: block;
+  font-size: 16px;
+  margin-bottom: 8px;
+  color: $text-color;
+  font-weight: 600;
+}
+
+.valor {
+  padding: 14px;
+  background-color: $input-background;
+  border: 1px solid $input-border-color;
+  border-radius: 6px;
+  min-height: 20px;
+  word-break: break-word;
+  line-height: 1.5;
+}
+
+// ===== ESTADOS ESPECIALES =====
+.urgente {
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+.estado-en-curso {
+  color: #27ae60;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+// ===== BOTONES DE ACCIÓN =====
+.acciones {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.btn-volver,
+.btn-editar {
+  display: inline-block;
+  padding: 12px 28px;
+  margin: 0 10px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: bold;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  min-width: 160px;
+}
+
+.btn-volver {
+  background-color: #555;
+  color: white;
+}
+
+.btn-volver:hover {
+  background-color: #666;
+}
+
+.btn-editar {
+  background-color: $button-color;
+  color: white;
+}
+
+.btn-editar:hover {
+  background-color: $button-hover;
+}
+
+// ===== RESPONSIVE =====
+@media (max-width: 768px) {
+  .detalle {
+    padding: 25px;
+    margin: 0 15px 40px 15px;
+  }
+
+  .btn-volver,
+  .btn-editar {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+  }
+
+  h1 {
+    font-size: 1.6rem;
+  }
+}

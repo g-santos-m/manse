@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-listado-partes',
   imports: [],
   templateUrl: './listado-partes.html',
-  styleUrl: './listado-partes.scss',
+  styleUrl: './listado-partes.css',
 })
 export class ListadoPartes {
 

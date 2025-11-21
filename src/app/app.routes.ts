@@ -1,13 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CrearParte } from './features/component/crear-parte/crear-parte';
-import { ListadoPartes } from "./features/component/listado-partes/listado-partes";
+import { DetalleParte } from './features/component/detalle-parte/detalle-parte';
 
 export const routes: Routes = [
   { path: 'crear-parte', component: CrearParte },
-  { path: 'listado-partes', component: ListadoPartes },
-  { path: '', redirectTo: '/listado-partes', pathMatch: 'full' },
-  { path: '**', redirectTo: '/listado-partes' }
+  { path: 'detalle-parte', component: DetalleParte },
+
+  { path: '', redirectTo: '/crear-parte', pathMatch: 'full' },
+  
+  { path: '**', redirectTo: '/crear-parte' }
 ];
 
 @NgModule({

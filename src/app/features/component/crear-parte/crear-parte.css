@@ -1,46 +1,53 @@
 /* Estilos globales */
-body {
-  font-family: Arial, sans-serif;
+html, body {
   margin: 0;
   padding: 0;
+  height: 100%; /* Asegura que ocupemos toda la altura de la ventana */
+  width: 100%; /* Asegura que ocupemos toda la anchura de la ventana */
+}
+
+body {
+  font-family: Arial, sans-serif;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh; /* Asegura que el body ocupe toda la altura de la ventana */
-  min-height: 100%; /* Garantiza que el body ocupe al menos toda la altura */
-  /* Reemplazo de $background-color */
-  background-color: #2d2d2d; 
-  /* Reemplazo de $text-color */
+  justify-content: center; /* Centrado horizontal */
+  align-items: center; /* Centrado vertical */
+  /* $background-color */
+  background-color: #2d2d2d;
+  /* $text-color */
+  color: #f0f0f0;
+  min-height: 100vh; /* Ocupa al menos toda la altura de la ventana */
+  /* $padding-top */
+  padding-top: 20px; /* Reducido padding superior */
+  flex-direction: column; /* Permite que el título esté arriba y el formulario abajo */
+}
+
+/* Estilos para el título */
+h1 {
+  text-align: center;
+  margin-top: 0; /* Elimina el margen superior para que quede en la parte superior */
+  margin-bottom: 20px; /* Espacio entre el título y el formulario */
+  /* $text-color */
   color: #f0f0f0;
 }
 
 /* Estilos para el formulario */
 form {
-  /* Reemplazo de $form-background */
+  /* $form-background */
   background-color: #333;
-  /* Aumenta el padding para darle más espacio alrededor del formulario */
-  padding: 30px;
+  padding: 30px; /* Aumenta el padding para darle más espacio alrededor del formulario */
   width: 100%;
-  /* Reemplazo de $max-width */
-  max-width: 900px;
+  /* $max-width */
+  max-width: 900px; /* Máximo de 900px de ancho */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
-  /* Añade margen para que no quede pegado a los bordes */
-  margin: 20px;
-}
-
-h1 {
-  text-align: center;
-  margin-bottom: 20px;
-  /* Reemplazo de $text-color */
-  color: #f0f0f0;
+  margin: 0 0 20px 0; /* Añade margen en la parte inferior para separar del borde */
 }
 
 label {
   font-size: 16px;
   margin-bottom: 5px;
   display: block;
-  /* Reemplazo de $text-color */
+  /* $text-color */
   color: #f0f0f0;
 }
 
@@ -48,30 +55,33 @@ label {
 input[type="text"],
 input[type="email"],
 input[type="date"],
-input[type="checkbox"],
+input[type="number"],
+input[type="password"],
 textarea,
 select {
   width: 100%;
   padding: 10px;
   margin: 8px 0 16px 0;
-  /* Reemplazo de $input-border-color */
+  /* $input-border-color */
   border: 1px solid #666;
   border-radius: 4px;
-  /* Reemplazo de $input-background */
+  /* $input-background */
   background-color: #444;
-  /* Reemplazo de $text-color */
+  /* $text-color */
   color: #f0f0f0;
   box-sizing: border-box;
 }
 
+/* Estilo para el checkbox (personalizado si es necesario) */
 input[type="checkbox"] {
   width: auto;
   display: inline-block;
   margin: 0;
 }
 
+/* Estilo para el botón */
 input[type="submit"] {
-  /* Reemplazo de $button-color */
+  /* $button-color */
   background-color: #3e8e41;
   color: white;
   border: none;
@@ -83,7 +93,7 @@ input[type="submit"] {
 }
 
 input[type="submit"]:hover {
-  /* Reemplazo de $button-hover */
+  /* $button-hover */
   background-color: #357a38;
 }
 

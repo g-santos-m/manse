@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DetalleParte } from './detalle-parte';
+import { ListadoPartes } from './listado-partes';
 
-describe('DetalleParte', () => {
-  let component: DetalleParte;
-  let fixture: ComponentFixture<DetalleParte>;
+describe('ListadoPartes', () => {
+  let component: ListadoPartes;
+  let fixture: ComponentFixture<ListadoPartes>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DetalleParte]
+      imports: [ListadoPartes]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(DetalleParte);
+    fixture = TestBed.createComponent(ListadoPartes);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -20,8 +20,4 @@ describe('DetalleParte', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-<<<<<<< HEAD
 });
-=======
-});
->>>>>>> 166c2cc14bb55f6e344576cdd29dbbcb5002888b

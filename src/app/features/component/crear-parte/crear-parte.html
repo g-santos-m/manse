@@ -1,56 +1,55 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulario Básico</title>
-</head>
-<body>
-    <h1>Nuevo Parte</h1>
+<h1>{{ title() }}</h1>
 
-    <!--Enviar a algún sitio coherente-->
-    <form action="procesar.php" method="POST">
-        <label for="fecha_apertura">Fecha apertura:</label><br>
-        <input type="date" id="fecha_apertura" name="fecha_apertura" required><br><br>
+<form (ngSubmit)="onSubmit()" #form="ngForm">
 
-        <label for="fecha_cierre">Fecha cierre:</label><br>
-        <input type="date" id="fecha_cierre" name="fecha_cierre" required><br><br>
+    <label for="fecha_apertura">Fecha apertura:</label><br>
+    <input type="date" id="fecha_apertura" name="fecha_apertura" [(ngModel)]="incidencia().fecha_apertura"
+        required><br><br>
 
-        <label for="nombre_cliente">Nombre cliente:</label><br>
-        <input id="text" name="nombre_cliente" required><br><br>
+    <label for="fecha_cierre">Fecha cierre:</label><br>
+    <input type="date" id="fecha_cierre" name="fecha_cierre" [(ngModel)]="incidencia().fecha_cierre" required><br><br>
 
-        <label for="direccion_edificio">Dirección edificio:</label><br>
-        <input id="text" name="direccion_edificio" required><br><br>
+    <label for="nombre_cliente">Nombre cliente:</label><br>
+    <input type="text" id="nombre_cliente" name="nombre_cliente" [(ngModel)]="incidencia().nombre_cliente"
+        required><br><br>
 
-        <label for="ubicacion_concreta">Ubicación concreta:</label><br>
-        <input id="text" name="ubicacion_concreta" required><br><br>
+    <label for="direccion_edificio">Dirección edificio:</label><br>
+    <input type="text" id="direccion_edificio" name="direccion_edificio" [(ngModel)]="incidencia().direccion_edificio"
+        required><br><br>
 
-        <label for="contacto_incidencia">Contacto de la persona que reporta la incidencia:</label><br>
-        <input id="text" name="contacto_incidencia" required><br><br>
+    <label for="ubicacion_concreta">Ubicación concreta:</label><br>
+    <input type="text" id="ubicacion_concreta" name="ubicacion_concreta" [(ngModel)]="incidencia().ubicacion_concreta"
+        required><br><br>
 
-        <!--Prioridad de la reparación-->
-        <label for="urgente">
-            <input type="checkbox" id="urgente" name="urgente" required>
-            Urgente
-        </label><br><br>
-        <!--Técnico asignado (desplegable)-->
-        <label for="tecnico">Técnico Asignado:</label><br>
-        <select id="tecnico" name="tecnico" required>
-          <option value="">Seleccione un técnico</option>
-          <option value="tecnico1">Juan Pérez</option>
-          <option value="tecnico2">Ana Gómez</option>
-          <option value="tecnico3">Carlos López</option>
-          <option value="tecnico4">María Rodríguez</option>
-        </select><br><br>
+    <label for="contacto_incidencia">Contacto persona que reporta:</label><br>
+    <input type="text" id="contacto_incidencia" name="contacto_incidencia"
+        [(ngModel)]="incidencia().contacto_incidencia" required><br><br>
 
+    <label>
+        <input type="checkbox" id="urgente" name="urgente" [(ngModel)]="incidencia().urgente">
+        Urgente
+    </label><br><br>
 
-        <label for="descripcion_breve">Incidencia (Descripción breve):</label><br>
-        <input id="text" name="descripcion_breve" required><br><br>
+    <label for="tecnico">Técnico asignado:</label><br>
+    <select id="tecnico" name="tecnico" [(ngModel)]="incidencia().tecnico" required>
+        <option value="">-- Seleccione técnico --</option>
+        <option value="tecnico1">Juan Pérez</option>
+        <option value="tecnico2">Ana Gómez</option>
+        <option value="tecnico3">Carlos López</option>
+        <option value="tecnico4">María Rodríguez</option>
+    </select><br><br>
 
-        <label for="descripcion_detalle">Incidencia (Detalle):</label><br>
-        <textarea id="text_area" name="descripcion_detalle" rows="4" cols="50" required></textarea><br><br>
+    <label for="descripcion_breve">Descripción breve:</label><br>
+    <input type="text" id="descripcion_breve" name="descripcion_breve" [(ngModel)]="incidencia().descripcion_breve"
+        required><br><br>
 
-        <input type="submit" value="Enviar">
-    </form>
-</body>
-</html>
+    <label for="descripcion_detalle">Detalle de la incidencia:</label><br>
+    <textarea id="descripcion_detalle" name="descripcion_detalle" rows="6"
+        [(ngModel)]="incidencia().descripcion_detalle" required></textarea><br><br>
+
+    <div class="acciones">
+        <button type="submit" [disabled]="form.invalid">Enviar Incidencia</button>
+        <button type="button" (click)="limpiar()">Limpiar formulario</button>
+    </div>
+
+</form>

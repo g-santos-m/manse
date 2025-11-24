@@ -1,32 +1,33 @@
 // Variables
 $background-color: #2d2d2d; // Fondo oscuro suave
-$form-background: #333;      // Fondo del formulario oscuro
-$text-color: #f0f0f0;        // Texto claro para contraste
-$input-background: #444;     // Fondo de los inputs
-$input-border-color: #666;  // Borde de los inputs
-$button-color: #3e8e41;     // Verde oscuro para el botón
-$button-hover: #357a38;     // Verde más oscuro para el hover
-$max-width: 900px;          // Máximo de 900px de ancho
-$padding-top: 20px;         // Menos padding en la parte superior
+$form-background: #333; // Fondo del formulario oscuro
+$text-color: #f0f0f0; // Texto claro para contraste
+$input-background: #444; // Fondo de los inputs
+$input-border-color: #666; // Borde de los inputs
+$button-color: #3e8e41; // Verde oscuro para el botón
+$button-hover: #357a38; // Verde más oscuro para el hover
+$max-width: 900px; // Máximo de 900px de ancho
+$padding-top: 20px; // Menos padding en la parte superior
 
 // Estilos globales
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   height: 100%; // Asegura que ocupemos toda la altura de la ventana
-  width: 100%;  // Asegura que ocupemos toda la anchura de la ventana
+  width: 100%; // Asegura que ocupemos toda la anchura de la ventana
 }
 
 body {
   font-family: Arial, sans-serif;
   display: flex;
-  justify-content: center;  // Centrado horizontal
-  align-items: center;      // Centrado vertical
+  justify-content: center; // Centrado horizontal
+  align-items: center; // Centrado vertical
   background-color: $background-color;
   color: $text-color;
-  min-height: 100vh;        // Ocupa al menos toda la altura de la ventana
+  min-height: 100vh; // Ocupa al menos toda la altura de la ventana
   padding-top: $padding-top; // Reducido padding superior
-  flex-direction: column;   // Permite que el título esté arriba y el formulario abajo
+  flex-direction: column; // Permite que el título esté arriba y el formulario abajo
 }
 
 // Estilos para el título

@@ -1,12 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 
-// === INTERFAZ DEL PARTE (ajústala si ya tienes una) ===
 export interface Parte {
   id: number;
-  fecha_apertura: string;        // ISO o formato que uses (ej: '2025-04-15')
+  fecha_apertura: string;
   fecha_cierre?: string | null;
   nombre_cliente: string;
   direccion_edificio: string;
@@ -16,31 +15,63 @@ export interface Parte {
   tecnico?: string;
   descripcion_breve: string;
   descripcion_detalle?: string;
-  estado: 'Abierto' | 'En curso' | 'Cerrado';
+  estado: 'Abierto' | 'Cerrado';
 }
-
-// === SERVICIO (crea uno si no lo tienes) ===
-<<<<<<< HEAD:src/app/features/component/listado-partes/listado-partes.ts
-//import { PartesService } from '../services/partes.service';
-=======
-// import { PartesService } from '../services/partes.service';
->>>>>>> 4bf1ace732b043220cfb7641ead8487d45ced7a9:client/src/app/features/component/listado-partes/listado-partes.ts
 
 @Component({
   selector: 'app-listado-partes',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    DatePipe
-  ],
+  imports: [CommonModule, FormsModule, DatePipe, RouterLink, RouterLinkActive],
   templateUrl: './listado-partes.html',
-  styleUrls: ['./listado-partes.css']
+  styleUrl: './listado-partes.css'
 })
 export class ListadoPartes {
+  // Tus partes directamente aquí (¡ya funciona!)
+  partes: Parte[] = [
+    {
+      id: 101,
+      fecha_apertura: '2025-11-25',
+      nombre_cliente: 'Ana García',
+      direccion_edificio: 'Calle Mayor 45, Madrid',
+      ubicacion_concreta: 'Portal 2, 3ºB',
+      urgente: true,
+      estado: 'Abierto',
+      descripcion_breve: 'Ruido fuerte en caldera'
+    },
+    {
+      id: 102,
+      fecha_apertura: '2025-11-20',
+      fecha_cierre: '2025-11-22',
+      nombre_cliente: 'Comunidad Sol y Luna',
+      direccion_edificio: 'Av. del Sol 12, Valencia',
+      ubicacion_concreta: 'Ascensor 1',
+      urgente: false,
+      tecnico: 'Pedro Martínez',
+      estado: 'Cerrado',
+      descripcion_breve: 'Ascensor parado entre plantas'
+    },
+    {
+      id: 103,
+      fecha_apertura: '2025-11-27',
+      nombre_cliente: 'Carlos Ruiz',
+      direccion_edificio: 'Paseo Marítimo 8, Málaga',
+      ubicacion_concreta: 'Aire acondicionado salón',
+      urgente: true,
+      estado: 'Abierto',
+      descripcion_breve: 'No enfría'
+    },
+    {
+      id: 104,
+      fecha_apertura: '2025-11-15',
+      nombre_cliente: 'Hotel Paraíso',
+      direccion_edificio: 'Playa del Inglés 1, Gran Canaria',
+      ubicacion_concreta: 'Piscina',
+      urgente: false,
+      estado: 'Abierto',
+      descripcion_breve: 'Filtro piscina atascado'
+    }
+  ];
 
-  // Listas originales y filtradas
-  partes: Parte[] = [];
   partesFiltrados: Parte[] = [];
 
   // Filtros
@@ -48,79 +79,45 @@ export class ListadoPartes {
   filtroUrgente: boolean | null = null;
   filtroEstado: string | null = null;
 
-  constructor(
-<<<<<<< HEAD:src/app/features/component/listado-partes/listado-partes.ts
-    //private partesService: PartesService,
-    private router: Router
-  ) {}
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
-    //this.cargarPartes();
+    this.partesFiltrados = [...this.partes]; // Muestra todos al cargar
   }
 
-  /** Carga todos los partes desde el servicio */
-  /* private cargarPartes(): void {
-=======
-    // private partesService: PartesService,
-    private router: Router
-  ) {}
-
-/*   ngOnInit(): void {
-    this.cargarPartes();
-  } */
-
-  /** Carga todos los partes desde el servicio */
-/*   private cargarPartes(): void {
->>>>>>> 4bf1ace732b043220cfb7641ead8487d45ced7a9:client/src/app/features/component/listado-partes/listado-partes.ts
-    this.partesService.getAll().subscribe({
-      next: (data: Parte[]) => {
-        this.partes = data;
-        this.aplicarFiltros();   // Primera aplicación de filtros (todos visibles)
-      },
-      error: (err) => {
-        console.error('Error al cargar los partes', err);
-        alert('No se pudieron cargar los partes. Revisa la consola.');
-      }
-    });
-  } */
-
-  /** Aplica todos los filtros activos */
   aplicarFiltros(): void {
     let resultado = [...this.partes];
 
-    // Filtro de texto (por nº parte, cliente o dirección)
-    if (this.filtroTexto.trim()) {
-      const texto = this.filtroTexto.toLowerCase().trim();
-      resultado = resultado.filter(p =>
-        p.id.toString().includes(texto) ||
-        (p.nombre_cliente?.toLowerCase().includes(texto) ?? false) ||
-        (p.direccion_edificio?.toLowerCase().includes(texto) ?? false)
-      );
-    }
+    if (this.filtroTexto.trim() !== '') {
+  const texto = this.filtroTexto.toLowerCase().trim();
+  resultado = resultado.filter(p =>
+    p.id.toString().includes(texto) ||
+    p.nombre_cliente.toLowerCase().includes(texto) ||
+    p.direccion_edificio.toLowerCase().includes(texto) ||
+    p.descripcion_breve.toLowerCase().includes(texto)
+  );
+}
 
-    // Filtro por urgencia
-    if (this.filtroUrgente !== null) {
-      resultado = resultado.filter(p => p.urgente === this.filtroUrgente);
-    }
 
-    // Filtro por estado
-    if (this.filtroEstado) {
-      resultado = resultado.filter(p => p.estado === this.filtroEstado);
-    }
+    (this.filtroUrgente !== null) && (
+      resultado = resultado.filter(p => p.urgente === this.filtroUrgente)
+    );
+
+    (this.filtroEstado) && (
+      resultado = resultado.filter(p => p.estado === this.filtroEstado)
+    );
 
     this.partesFiltrados = resultado;
   }
 
-  /** Navegar al detalle del parte */
   verDetalle(id: number): void {
     this.router.navigate(['/partes', id]);
   }
 
-  /** Limpiar todos los filtros */
   limpiarFiltros(): void {
     this.filtroTexto = '';
     this.filtroUrgente = null;
     this.filtroEstado = null;
-    this.aplicarFiltros();
+    this.partesFiltrados = [...this.partes];
   }
 }

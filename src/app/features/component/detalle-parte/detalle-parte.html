@@ -1,3 +1,6 @@
+<<<<<<< HEAD
+<h1>{{ title() }} #{{ parte().id }}</h1>
+=======
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -9,74 +12,68 @@
 </head>
 <body>
     <h1>Detalle del Parte</h1>
+>>>>>>> fa42d93fed8f31ae1a5bad9db89e2ae2e4d24948
 
-    <div class="detalle">
-        <div class="campo">
-            <label>Fecha apertura:</label>
-            <div class="valor">2025-11-17</div>
-        </div>
+<div class="detalle">
+  <div class="campo">
+    <label>Fecha apertura:</label>
+    <div class="valor">{{ parte().fecha_apertura }}</div>
+  </div>
 
-        <div class="campo">
-            <label>Fecha cierre:</label>
-            <div class="valor">— (Aún no cerrado)</div>
-        </div>
+  <div class="campo">
+    <label>Fecha cierre:</label>
+    <div class="valor">{{ parte().fecha_cierre || '— (Aún no cerrado)' }}</div>
+  </div>
 
-        <div class="campo">
-            <label>Nombre cliente:</label>
-            <div class="valor">Comunidad de Propietarios Sol y Mar</div>
-        </div>
+  <div class="campo">
+    <label>Nombre cliente:</label>
+    <div class="valor">{{ parte().nombre_cliente }}</div>
+  </div>
 
-        <div class="campo">
-            <label>Dirección edificio:</label>
-            <div class="valor">Calle del Mar, 45, 29640 Fuengirola, Málaga</div>
-        </div>
+  <div class="campo">
+    <label>Dirección edificio:</label>
+    <div class="valor">{{ parte().direccion_edificio }}</div>
+  </div>
 
-        <div class="campo">
-            <label>Ubicación concreta:</label>
-            <div class="valor">Portal 2, escalera B, rellano 3º</div>
-        </div>
+  <div class="campo">
+    <label>Ubicación concreta:</label>
+    <div class="valor">{{ parte().ubicacion_concreta }}</div>
+  </div>
 
-        <div class="campo">
-            <label>Contacto de la incidencia:</label>
-            <div class="valor">Laura Sánchez – 654 321 987</div>
-        </div>
+  <div class="campo">
+    <label>Contacto de la incidencia:</label>
+    <div class="valor">{{ parte().contacto_incidencia }}</div>
+  </div>
 
-        <div class="campo">
-            <label>Urgente:</label>
-            <div class="valor urgente">Sí</div>
-        </div>
-
-        <div class="campo">
-            <label>Técnico asignado:</label>
-            <div class="valor">Juan Pérez</div>
-        </div>
-
-        <div class="campo">
-            <label>Incidencia (Descripción breve):</label>
-            <div class="valor">Puerta de garaje no cierra completamente</div>
-        </div>
-
-        <div class="campo">
-            <label>Incidencia (Detalle):</label>
-            <div class="valor">
-                La puerta comunitaria del garaje se queda a medio cerrar, 
-                emite un ruido fuerte y a veces se queda atascada. 
-                Los vecinos reportan que lleva pasando varios días y temen 
-                que quede abierta por la noche.
-            </div>
-        </div>
-
-        <div class="campo">
-            <label>Estado actual:</label>
-            <div class="valor estado-en-curso">En curso</div>
-        </div>
+  <div class="campo">
+    <label>Urgente:</label>
+    <div class="valor" [class.urgente]="parte().urgente">
+      {{ parte().urgente ? 'Sí' : 'No' }}
     </div>
+  </div>
 
-    <!--Aquí ira el link para volver al listado de partes-->
-    <div class="acciones">
-        <a href="listado-partes.html" class="btn-volver">← Volver al listado</a>
-        <!--Esta parte no sé si ponerla -->
-        <a href="#" class="btn-editar">Editar parte</a>
-    </div>
-</body>
-</html>
+  <div class="campo">
+    <label>Técnico asignado:</label>
+    <div class="valor">{{ parte().tecnico }}</div>
+  </div>
+
+  <div class="campo">
+    <label>Incidencia (Descripción breve):</label>
+    <div class="valor">{{ parte().descripcion_breve }}</div>
+  </div>
+
+  <div class="campo">
+    <label>Incidencia (Detalle):</label>
+    <div class="valor">{{ parte().descripcion_detalle }}</div>
+  </div>
+
+  <div class="campo">
+    <label>Estado actual:</label>
+    <div class="valor estado-en-curso">{{ parte().estado }}</div>
+  </div>
+</div>
+
+<div class="acciones">
+  <button class="btn-volver" (click)="volver()">Volver al listado</button>
+  <button class="btn-editar" (click)="editar()">Editar parte</button>
+</div>

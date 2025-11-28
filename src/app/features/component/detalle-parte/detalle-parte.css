@@ -3,11 +3,11 @@
   display: block;
   min-height: 100vh;
   /* $background-color */
-  background-color: #2d2d2d; 
+  background-color: #2d2d2d;
   /* $text-color */
-  color: #f0f0f0; 
+  color: #f0f0f0;
   /* $padding-top */
-  padding: 20px 20px; 
+  padding: 20px 20px;
   font-family: Arial, sans-serif;
 }
 
@@ -16,18 +16,18 @@ h1 {
   text-align: center;
   margin: 0 0 30px 0;
   /* $text-color */
-  color: #f0f0f0; 
+  color: #f0f0f0;
   font-size: 2rem;
 }
 
 /* ===== CONTENEDOR PRINCIPAL (mismo look que el form) ===== */
 .detalle {
   /* $form-background */
-  background-color: #333; 
+  background-color: #333;
   padding: 40px;
   width: 100%;
   /* $max-width */
-  max-width: 900px; 
+  max-width: 900px;
   margin: 0 auto 40px auto;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   border-radius: 8px;
@@ -43,16 +43,16 @@ h1 {
   font-size: 16px;
   margin-bottom: 8px;
   /* $text-color */
-  color: #f0f0f0; 
+  color: #f0f0f0;
   font-weight: 600;
 }
 
 .valor {
   padding: 14px;
   /* $input-background */
-  background-color: #444; 
+  background-color: #444;
   /* $input-border-color */
-  border: 1px solid #666; 
+  border: 1px solid #666;
   border-radius: 6px;
   min-height: 20px;
   word-break: break-word;
@@ -104,13 +104,13 @@ h1 {
 
 .btn-editar {
   /* $button-color */
-  background-color: #3e8e41; 
+  background-color: #3e8e41;
   color: white;
 }
 
 .btn-editar:hover {
   /* $button-hover */
-  background-color: #357a38; 
+  background-color: #357a38;
 }
 
 /* ===== RESPONSIVE ===== */

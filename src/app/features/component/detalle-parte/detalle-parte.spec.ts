@@ -20,4 +20,8 @@ describe('DetalleParte', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+<<<<<<< HEAD
 });
+=======
+});
+>>>>>>> 166c2cc14bb55f6e344576cdd29dbbcb5002888b

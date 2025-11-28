@@ -20,7 +20,11 @@ export interface Parte {
 }
 
 // === SERVICIO (crea uno si no lo tienes) ===
+<<<<<<< HEAD:src/app/features/component/listado-partes/listado-partes.ts
 //import { PartesService } from '../services/partes.service';
+=======
+// import { PartesService } from '../services/partes.service';
+>>>>>>> 4bf1ace732b043220cfb7641ead8487d45ced7a9:client/src/app/features/component/listado-partes/listado-partes.ts
 
 @Component({
   selector: 'app-listado-partes',
@@ -33,7 +37,7 @@ export interface Parte {
   templateUrl: './listado-partes.html',
   styleUrls: ['./listado-partes.css']
 })
-export class ListadoPartes implements OnInit {
+export class ListadoPartes {
 
   // Listas originales y filtradas
   partes: Parte[] = [];
@@ -45,6 +49,7 @@ export class ListadoPartes implements OnInit {
   filtroEstado: string | null = null;
 
   constructor(
+<<<<<<< HEAD:src/app/features/component/listado-partes/listado-partes.ts
     //private partesService: PartesService,
     private router: Router
   ) {}
@@ -55,6 +60,18 @@ export class ListadoPartes implements OnInit {
 
   /** Carga todos los partes desde el servicio */
   /* private cargarPartes(): void {
+=======
+    // private partesService: PartesService,
+    private router: Router
+  ) {}
+
+/*   ngOnInit(): void {
+    this.cargarPartes();
+  } */
+
+  /** Carga todos los partes desde el servicio */
+/*   private cargarPartes(): void {
+>>>>>>> 4bf1ace732b043220cfb7641ead8487d45ced7a9:client/src/app/features/component/listado-partes/listado-partes.ts
     this.partesService.getAll().subscribe({
       next: (data: Parte[]) => {
         this.partes = data;

@@ -20,7 +20,7 @@ export interface Parte {
 }
 
 // === SERVICIO (crea uno si no lo tienes) ===
-import { PartesService } from '../services/partes.service';
+//import { PartesService } from '../services/partes.service';
 
 @Component({
   selector: 'app-listado-partes',
@@ -30,8 +30,8 @@ import { PartesService } from '../services/partes.service';
     FormsModule,
     DatePipe
   ],
-  templateUrl: './listado-partes.component.html',
-  styleUrls: ['./listado-partes.component.scss']
+  templateUrl: './listado-partes.html',
+  styleUrls: ['./listado-partes.css']
 })
 export class ListadoPartes implements OnInit {
 
@@ -45,16 +45,16 @@ export class ListadoPartes implements OnInit {
   filtroEstado: string | null = null;
 
   constructor(
-    private partesService: PartesService,
+    //private partesService: PartesService,
     private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.cargarPartes();
+    //this.cargarPartes();
   }
 
   /** Carga todos los partes desde el servicio */
-  private cargarPartes(): void {
+  /* private cargarPartes(): void {
     this.partesService.getAll().subscribe({
       next: (data: Parte[]) => {
         this.partes = data;
@@ -65,7 +65,7 @@ export class ListadoPartes implements OnInit {
         alert('No se pudieron cargar los partes. Revisa la consola.');
       }
     });
-  }
+  } */
 
   /** Aplica todos los filtros activos */
   aplicarFiltros(): void {

@@ -1,85 +1,85 @@
-<div class="listado-partes">
-  <h2>Listado de Partes de Trabajo</h2>
-
-  <!-- Filtros rápidos (opcional pero muy útil) -->
-  <div class="filtros">
-    <input 
-      type="text" 
-      placeholder="Buscar por cliente, dirección o nº parte..." 
-      [(ngModel)]="filtroTexto" 
-      (input)="aplicarFiltros()"
-      class="filtro-busqueda">
-    
-    <select [(ngModel)]="filtroUrgente" (change)="aplicarFiltros()">
-      <option [ngValue]="null">Todas las urgencias</option>
-      <option [ngValue]="true">Solo urgentes</option>
-      <option [ngValue]="false">No urgentes</option>
-    </select>
-
-    <select [(ngModel)]="filtroEstado" (change)="aplicarFiltros()">
-      <option [ngValue]="null">Todos los estados</option>
-      <option value="Abierto">Abierto</option>
-      <option value="En curso">En curso</option>
-      <option value="Cerrado">Cerrado</option>
-    </select>
-  </div>
-
-  <!-- Tabla de partes -->
-  <div class="tabla-container">
-    <table class="tabla-partes">
-      <thead>
-        <tr>
-          <th># Parte</th>
-          <th>Fecha apertura</th>
-          <th>Cliente</th>
-          <th>Dirección</th>
-          <th>Ubicación</th>
-          <th class="col-urgente">Urgente</th>
-          <th>Técnico</th>
-          <th>Estado</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let parte of partesFiltrados" 
-            [class.fila-urgente]="parte.urgente"
-            [routerLink]="['/partes', parte.id]"
-            class="fila-clickeable">
-
-          <td><strong>#{{ parte.id }}</strong></td>
-          <td>{{ parte.fecha_apertura | date:'shortDate' }}</td>
-          <td>{{ parte.nombre_cliente }}</td>
-          <td>{{ parte.direccion_edificio }}</td>
-          <td>{{ parte.ubicacion_concreta }}</td>
-          <td class="col-urgente centro">
-            <span class="badge" [class.urgente]="parte.urgente">
-              {{ parte.urgente ? 'SÍ' : 'No' }}
-            </span>
-          </td>
-          <td>{{ parte.tecnico || '—' }}</td>
-          <td>
-            <span class="estado" [ngClass]="{
-              'estado-abierto': parte.estado === 'Abierto',
-              'estado-en-curso': parte.estado === 'En curso',
-              'estado-cerrado': parte.estado === 'Cerrado'
-            }">
-              {{ parte.estado }}
-            </span>
-          </td>
-          <td class="acciones">
-            <button class="btn-ver" 
-                    [routerLink]="['/partes', parte.id]" 
-                    (click)="$event.stopPropagation()">
-              Ver detalle
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-    <!-- Mensaje cuando no hay partes -->
-    <div *ngIf="partesFiltrados.length === 0" class="sin-resultados">
-      <p>No se encontraron partes con los filtros actuales.</p>
-    </div>
-  </div>
-</div>
+<!--<div class="listado-partes"> -->
+<!--<h2>Listado de Partes de Trabajo</h2> -->
+<!-- -->
+<!--  <!-- Filtros rápidos (opcional pero muy útil) --> -->
+<!--  <div class="filtros"> -->
+<!--    <input  -->
+<!--      type="text"  -->
+<!--      placeholder="Buscar por cliente, dirección o nº parte..."  -->
+<!--      [(ngModel)]="filtroTexto"  -->
+<!--      (input)="aplicarFiltros()" -->
+<!--      class="filtro-busqueda"> -->
+<!--       -->
+<!--      <select [(ngModel)]="filtroUrgente" (change)="aplicarFiltros()"> -->
+<!--      <option [ngValue]="null">Todas las urgencias</option> -->
+<!--      <option [ngValue]="true">Solo urgentes</option> -->
+<!--      <option [ngValue]="false">No urgentes</option> -->
+<!--    </select> -->
+<!-- -->
+<!--    <select [(ngModel)]="filtroEstado" (change)="aplicarFiltros()"> -->
+<!--      <option [ngValue]="null">Todos los estados</option> -->
+<!--      <option value="Abierto">Abierto</option> -->
+<!--      <option value="En curso">En curso</option> -->
+<!--      <option value="Cerrado">Cerrado</option> -->
+<!--    </select> -->
+<!--  </div> -->
+<!-- -->
+<!--  <!-- Tabla de partes --> -->
+<!--  <div class="tabla-container"> -->
+<!--    <table class="tabla-partes"> -->
+<!--      <thead> -->
+<!--        <tr> -->
+<!--          <th># Parte</th> -->
+<!--          <th>Fecha apertura</th> -->
+<!--          <th>Cliente</th> -->
+<!--          <th>Dirección</th> -->
+<!--          <th>Ubicación</th> -->
+<!--          <th class="col-urgente">Urgente</th> -->
+<!--          <th>Técnico</th> -->
+<!--          <th>Estado</th> -->
+<!--          <th>Acciones</th> -->
+<!--        </tr> -->
+<!--      </thead> -->
+<!--      <tbody> -->
+<!--        <tr *ngFor="let parte of partesFiltrados"  -->
+<!--            [class.fila-urgente]="parte.urgente" -->
+<!--            [routerLink]="['/partes', parte.id]" -->
+<!--            class="fila-clickeable"> -->
+<!-- -->
+<!--          <td><strong>#{{ parte.id }}</strong></td> -->
+<!--          <td>{{ parte.fecha_apertura | date:'shortDate' }}</td> -->
+<!--          <td>{{ parte.nombre_cliente }}</td> -->
+<!--          <td>{{ parte.direccion_edificio }}</td> -->
+<!--          <td>{{ parte.ubicacion_concreta }}</td> -->
+<!--          <td class="col-urgente centro"> -->
+<!--            <span class="badge" [class.urgente]="parte.urgente"> -->
+<!--              {{ parte.urgente ? 'SÍ' : 'No' }} -->
+<!--            </span> -->
+<!--          </td> -->
+<!--          <td>{{ parte.tecnico || '—' }}</td> -->
+<!--          <td> -->
+<!--            <span class="estado" [ngClass]="{ -->
+<!--              'estado-abierto': parte.estado === 'Abierto', -->
+<!--              'estado-en-curso': parte.estado === 'En curso', -->
+<!--              'estado-cerrado': parte.estado === 'Cerrado' -->
+<!--            }"> -->
+<!--              {{ parte.estado }} -->
+<!--            </span> -->
+<!--          </td> -->
+<!--          <td class="acciones"> -->
+<!--            <button class="btn-ver"  -->
+<!--                    [routerLink]="['/partes', parte.id]"  -->
+<!--                    (click)="$event.stopPropagation()"> -->
+<!--              Ver detalle -->
+<!--            </button> -->
+<!--          </td> -->
+<!--        </tr> -->
+<!--      </tbody> -->
+<!--    </table> -->
+<!-- -->
+<!--    <!-- Mensaje cuando no hay partes --> -->
+<!--    <div *ngIf="partesFiltrados.length === 0" class="sin-resultados"> -->
+<!--      <p>No se encontraron partes con los filtros actuales.</p> -->
+<!--    </div> -->
+<!--  </div> -->
+<!--</div> -->

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink} from '@angular/router';
 
 export interface Parte {
   id: number;
@@ -21,7 +21,7 @@ export interface Parte {
 @Component({
   selector: 'app-listado-partes',
   standalone: true,
-  imports: [CommonModule, FormsModule, DatePipe, RouterLink, RouterLinkActive],
+  imports: [CommonModule, FormsModule, DatePipe, RouterLink],
   templateUrl: './listado-partes.html',
   styleUrl: './listado-partes.css'
 })

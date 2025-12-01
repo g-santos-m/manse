@@ -1,8 +1,10 @@
-import app from './app.ts';
 import { getAll, create, update, remove }  from './repository.ts';
-import { Parte } from '../../shared/interfaces.ts';
+import { Parte } from './interfaces.ts';
+import express from 'express';
 
-app.get('/api/partes', (req, res) => {
+const router = express.Router();
+
+router.get('/partes', (req, res) => {
     try {
         const partes: Parte[] = getAll();
         res.send({ success: true, data: partes });
@@ -12,10 +14,9 @@ app.get('/api/partes', (req, res) => {
     }
 });
 
-app.post('/api/parte', (req, res) => {
+router.post('/parte', (req, res) => {
     try {
-        console.log('Recibido', req.body);
-        const parte: Parte = JSON.parse(req.body.data);
+        const parte: Parte = req.body;
         create(parte);
         res.send({ success: true, data: null });
     } catch (error) {
@@ -24,9 +25,9 @@ app.post('/api/parte', (req, res) => {
     }
 })
 
-app.put('/api/parte', (req, res) => {
+router.put('/parte', (req, res) => {
     try {
-        const parte: Parte = JSON.parse(req.body.data);
+        const parte: Parte = JSON.parse(req.body);
         update(parte);
         res.send({ success: true, data: null });
     } catch (error) {
@@ -35,9 +36,9 @@ app.put('/api/parte', (req, res) => {
     }
 })
 
-app.delete('/api/parte', (req, res) => {
+router.delete('/parte', (req, res) => {
     try {
-        const id: number = Number(req.body.data);
+        const id: number = Number(req.body);
         remove(id);
         res.send({ success: true, data: null });
     } catch (error) {
@@ -45,3 +46,5 @@ app.delete('/api/parte', (req, res) => {
         res.send({ success: false, data: null });
     }
 })
+
+export default router;

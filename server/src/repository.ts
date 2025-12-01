@@ -1,4 +1,4 @@
-import { Parte } from '../../shared/interfaces.ts';
+import { Parte } from './interfaces.ts';
 import db from './sqlite.ts';
 
 export const getAll = (): Parte[] => {
@@ -8,8 +8,16 @@ export const getAll = (): Parte[] => {
 }
 
 export const create = (parte: Parte) => {
-   const query = db.prepare('INSERT INTO parte (fecha_apertura, fecha_cierre, nombre_cliente, direccion_edificio, ubicacion_concreta, contacto_incidencia, urgente, tecnico, descripcion_breve, descripcion_detalle, estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
-   query.run(parte.fecha_apertura, parte.fecha_cierre, parte.nombre_cliente, parte.direccion_edificio, parte.ubicacion_concreta, parte.contacto_incidencia, parte.urgente, parte.tecnico, parte.descripcion_breve, parte.descripcion_detalle, parte.estado);
+   const urgente_number: number = parte.urgente ? 1 : 0;
+   const query = db.prepare(`
+      INSERT INTO parte (fecha_apertura, fecha_cierre, nombre_cliente, direccion_edificio,
+      ubicacion_concreta, contacto_incidencia, urgente, tecnico, descripcion_breve,
+      descripcion_detalle, estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+   `);
+   query.run(parte.fecha_apertura, parte.fecha_cierre, parte.nombre_cliente,
+      parte.direccion_edificio, parte.ubicacion_concreta, parte.contacto_incidencia,
+      urgente_number, parte.tecnico, parte.descripcion_breve, parte.descripcion_detalle, parte.estado
+   );
 }
 
 export const update = (parte: Parte) => {

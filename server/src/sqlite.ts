@@ -15,7 +15,7 @@ db.prepare(`
     tecnico TEXT NULL,
     descripcion_breve TEXT NOT NULL,
     descripcion_detalle TEXT NULL,
-    estado TEXT NOT NULL,
+    estado TEXT NOT NULL
   )
 `).run();
 

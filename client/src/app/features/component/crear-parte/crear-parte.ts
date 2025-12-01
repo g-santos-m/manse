@@ -30,7 +30,10 @@ export class CrearParte {
   onSubmit() {
     console.log('Incidencia enviada:', this.incidencia());
     alert('¡Incidencia creada correctamente!');
-    this.parteService.createParte(this.incidencia());
+    this.parteService.createParte(this.incidencia()).subscribe({
+      next: (res) => console.log(res),
+      error: (err) => console.log(err),
+    })
   }
 
   limpiar() {

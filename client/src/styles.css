@@ -1,45 +1,62 @@
 @import "tailwindcss";
 
+/* ═══════════ TUS COLORES SEMÁNTICOS (usando oklch = futuro-proof) ═══════════ */
 @theme {
-    /* Colores */
-    --color-primary: var(--color-blue-700);
-    --color-accent: var(--color-blue-500);
-    --color-background: white;
-    --color-surface: var(--color-slate-100);
-    --color-text-primary: var(--color-slate-800);
-    --color-text-secondary: var(--color-slate-500);
-    --color-success: var(--color-green-500);
-    --color-warning: var(--color-amber-500);
-    --color-danger: var(--color-red-700);
-    --color-info: var(--color-blue-400);
+  --color-primary: oklch(48% 0.25 260);
+  --color-primary-hover: oklch(42% 0.25 260);
+  --color-accent: oklch(65% 0.2 240);
+  --color-background: white;
+  --color-surface: oklch(97% 0.015 240);
+  --color-text-primary: oklch(20% 0.02 240);
+  --color-text-secondary: oklch(45% 0.02 240);
+  --color-success: oklch(65% 0.25 140);
+  --color-warning: oklch(80% 0.25 80);
+  --color-danger: oklch(55% 0.32 25);
+  --color-danger-hover: oklch(48% 0.32 25);
+  --color-info: oklch(65% 0.15 220);
 }
 
-body {
+/* Estilos base */
+@layer base {
+  body {
+    @apply bg-background text-text-primary min-h-screen antialiased;
     margin: 0;
-    font-family: system-ui, Arial, sans-serif;
+    font-family: system-ui, -apple-system, sans-serif;
+  }
 }
 
-button {
-    color: var(--color-text-primary);
-    padding: 4px;
-}
+/* Tus clases reutilizables (ahora SÍ funcionan) */
+@layer components {
+  .container {
+    @apply max-w-5xl mx-auto px-6 py-8;
+  }
 
-button:hover {
-    border-radius: var(--radius-sm);
-    background-color: lightgray;
-}
+  .card {
+    @apply bg-surface rounded-lg border border-slate-200 shadow-sm p-6;
+  }
 
-button.active {
-    font-weight: var(--font-weight-semibold);
-}
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 
+           rounded-md font-medium text-sm transition-all 
+           border border-transparent select-none cursor-pointer
+           disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  .btn-primary {
+    @apply bg-primary text-white hover:bg-[var(--color-primary-hover)] shadow-sm;
+  }
+  .btn-outline {
+    @apply border border-current text-primary bg-transparent hover:bg-primary/5;
+  }
+  .btn-danger {
+    @apply bg-danger text-white hover:bg-[var(--color-danger-hover)];
+  }
 
-.topbar {
-    position: sticky;
-    top: 0;
-}
-
-.container {
-    max-width: 1100px;
-    margin: 20px auto;
-    padding: 0 16px;
+  /* Badges */
+  .badge {
+    @apply inline-block px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider;
+  }
+  .badge-success { @apply bg-success/15 text-success; }
+  .badge-warning   { @apply bg-amber-600/15 text-amber-700; }
+  .badge-danger    { @apply bg-danger/15 text-danger border border-danger/30; }
+  .badge-lg        { @apply px-4 py-2 text-sm; }
 }

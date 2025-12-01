@@ -3,7 +3,7 @@ import db from './sqlite.ts';
 
 export const getAll = (): Parte[] => {
    const query = db.prepare('SELECT * FROM parte');
-   const partes: Parte[] = query.get() as Parte[];
+   const partes: Parte[] = query.all() as Parte[];
    return partes;
 }
 

@@ -11,8 +11,8 @@ export class ParteService {
 
     // API
 
-    getPartes = (): Observable<ApiResponse<Parte>> => {
-        return this.http.get<ApiResponse<Parte>>(`${this.apiUrl}/partes`)
+    getPartes = (): Observable<ApiResponse<Parte[]>> => {
+        return this.http.get<ApiResponse<Parte[]>>(`${this.apiUrl}/partes`)
     };
 
     createParte = (parte: Parte): Observable<ApiResponse<Parte>> => {

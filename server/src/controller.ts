@@ -7,6 +7,7 @@ const router = express.Router();
 router.get('/partes', (req, res) => {
     try {
         const partes: Parte[] = getAll();
+        console.log(partes)
         res.send({ success: true, data: partes });
     } catch (error) {
         console.log(error)

@@ -3,21 +3,8 @@ import { Component, signal, OnInit } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-
-export interface Parte {
-  id: number;
-  fecha_apertura: string;
-  fecha_cierre?: string | null;
-  nombre_cliente: string;
-  direccion_edificio: string;
-  ubicacion_concreta: string;
-  contacto_incidencia?: string;
-  urgente: boolean;
-  tecnico?: string;
-  descripcion_breve: string;
-  descripcion_detalle?: string;
-  estado: 'Abierto' | 'Cerrado';
-}
+import { Parte } from '../../../interfaces/interfaces';
+import { ParteService } from '../../../services/parte-service';
 
 @Component({
   selector: 'app-listado-partes',
@@ -28,6 +15,8 @@ export interface Parte {
 })
 export class ListadoPartes implements OnInit {
 
+  private readonly parteService = new ParteService();
+
   partes = signal<Parte[]>([
     { id: 101, fecha_apertura: '2025-11-25', nombre_cliente: 'Ana García', direccion_edificio: 'Calle Mayor 45, Madrid', ubicacion_concreta: 'Portal 2, 3ºB', urgente: true, estado: 'Abierto', descripcion_breve: 'Ruido fuerte en caldera' },
     { id: 102, fecha_apertura: '2025-11-20', fecha_cierre: '2025-11-22', nombre_cliente: 'Comunidad Sol y Luna', direccion_edificio: 'Av. del Sol 12, Valencia', ubicacion_concreta: 'Ascensor 1', urgente: false, tecnico: 'Pedro Martínez', estado: 'Cerrado', descripcion_breve: 'Ascensor parado entre plantas' },
@@ -36,6 +25,7 @@ export class ListadoPartes implements OnInit {
   ]);
 
   partesFiltrados = signal<Parte[]>([]);
+  parteTemp: Parte[] = [];
 
   filtroTexto = '';
   filtroUrgente: boolean | null = null;
@@ -44,10 +34,17 @@ export class ListadoPartes implements OnInit {
   constructor(private router: Router) {}
 
   ngOnInit(): void {
-    this.aplicarFiltros();
+    this.parteService.getPartes().subscribe({
+      next: (res) => {
+        console.log(res);
+        this.parteTemp = res.data;
+      },
+    });
+    console.log(this.parteTemp);
+    //this.aplicarFiltros();
   }
 
-  aplicarFiltros(): void {
+/*   aplicarFiltros(): void {
     let resultado = this.partes();
 
     if (this.filtroTexto.trim()) {
@@ -69,16 +66,16 @@ export class ListadoPartes implements OnInit {
     }
 
     this.partesFiltrados.set(resultado);
-  }
+  } */
 
   limpiarFiltros(): void {
     this.filtroTexto = '';
     this.filtroUrgente = null;
     this.filtroEstado = null;
-    this.aplicarFiltros();
+    //this.aplicarFiltros();
   }
 
-  verDetalle(id: number): void {
+  verDetalle(id?: number): void {
     this.router.navigate(['/partes', id]);
   }
 }

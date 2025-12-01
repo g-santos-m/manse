@@ -3,7 +3,7 @@
 
   <h1 class="text-3xl font-bold text-primary mb-8">{{ title() }}</h1>
 
-  <form (ngSubmit)="onSubmit()" #form="ngForm" class="card p-8">
+<form #form="ngForm">
 
     <div class="grid md:grid-cols-2 gap-8">
 
@@ -156,7 +156,9 @@
       </button>
       <button type="submit"
               class="btn btn-primary"
-              [disabled]="form.invalid">
+              [disabled]="form.invalid"
+              (click)="onSubmit()" 
+              >
         <span *ngIf="esEdicionMode(); else crearTexto">
           Actualizar Parte
         </span>

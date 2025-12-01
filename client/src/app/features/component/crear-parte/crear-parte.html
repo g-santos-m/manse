@@ -1,6 +1,6 @@
 <h1>{{ title() }}</h1>
 
-<form (ngSubmit)="onSubmit()" #form="ngForm">
+<form #form="ngForm">
 
     <label for="fecha_apertura">Fecha apertura:</label><br>
     <input type="date" id="fecha_apertura" name="fecha_apertura" [(ngModel)]="incidencia().fecha_apertura"
@@ -48,7 +48,7 @@
         [(ngModel)]="incidencia().descripcion_detalle" required></textarea><br><br>
 
     <div class="acciones">
-        <button type="submit" [disabled]="form.invalid">Enviar Incidencia</button>
+        <button type="submit" (click)="onSubmit()">Enviar Incidencia</button>
         <button type="button" (click)="limpiar()">Limpiar formulario</button>
     </div>
 

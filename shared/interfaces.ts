@@ -1,5 +1,5 @@
 export interface Parte {
-  id: number;
+  id?: number;
   fecha_apertura: string;
   fecha_cierre?: string | null;
   nombre_cliente: string;
@@ -11,4 +11,9 @@ export interface Parte {
   descripcion_breve: string;
   descripcion_detalle?: string;
   estado: 'Abierto' | 'En curso' | 'Cerrado';
+}
+
+export interface ApiResponse<T> {
+  success: boolean;
+  data: T;
 }

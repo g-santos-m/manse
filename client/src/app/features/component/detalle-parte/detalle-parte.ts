@@ -1,10 +1,15 @@
+// detalle-parte.component.ts
 import { Component, signal, OnInit, inject } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CommonModule, DatePipe } from '@angular/common';   // ← Añadido
 
 @Component({
-  selector: 'app-root',
+  selector: 'app-detalle-parte',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, RouterLinkActive],
+  imports: [
+    CommonModule,     // ← Necesario para *ngIf, [class.xxx], etc.
+    DatePipe          // ← Necesario para usar | date en el HTML
+  ],
   templateUrl: './detalle-parte.html',
   styleUrl: './detalle-parte.css'
 })
@@ -26,15 +31,16 @@ export class DetalleParte implements OnInit {
     tecnico: '',
     descripcion_breve: '',
     descripcion_detalle: '',
-    estado: 'En curso'   // ya lo pongo con mayúscula para no usar titlecase
+    estado: 'Abierto' as 'Abierto' | 'Cerrado'
   });
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id') ?? '123';
 
+    // Datos de ejemplo (simulando que vienen del backend)
     this.parte.set({
       id,
-      fecha_apertura: '2025-11-17',
+      fecha_apertura: '2025-11-17T10:30:00',
       fecha_cierre: null,
       nombre_cliente: 'Comunidad de Propietarios Sol y Mar',
       direccion_edificio: 'Calle del Mar, 45, 29640 Fuengirola, Málaga',
@@ -47,7 +53,7 @@ export class DetalleParte implements OnInit {
       emite un ruido fuerte y a veces se queda atascada.
       Los vecinos reportan que lleva pasando varios días y temen
       que quede abierta por la noche.`,
-      estado: 'En curso'
+      estado: 'Abierto'
     });
   }
 

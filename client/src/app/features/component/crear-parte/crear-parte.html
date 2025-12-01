@@ -1,55 +1,168 @@
-<h1>{{ title() }}</h1>
+<!-- crear-parte.html -->
+<div class="container max-w-4xl">
 
-<form (ngSubmit)="onSubmit()" #form="ngForm">
+  <h1 class="text-3xl font-bold text-primary mb-8">{{ title() }}</h1>
 
-    <label for="fecha_apertura">Fecha apertura:</label><br>
-    <input type="date" id="fecha_apertura" name="fecha_apertura" [(ngModel)]="incidencia().fecha_apertura"
-        required><br><br>
+  <form (ngSubmit)="onSubmit()" #form="ngForm" class="card p-8">
 
-    <label for="fecha_cierre">Fecha cierre:</label><br>
-    <input type="date" id="fecha_cierre" name="fecha_cierre" [(ngModel)]="incidencia().fecha_cierre" required><br><br>
+    <div class="grid md:grid-cols-2 gap-8">
 
-    <label for="nombre_cliente">Nombre cliente:</label><br>
-    <input type="text" id="nombre_cliente" name="nombre_cliente" [(ngModel)]="incidencia().nombre_cliente"
-        required><br><br>
+      <!-- Columna izquierda -->
+      <div class="space-y-6">
 
-    <label for="direccion_edificio">Dirección edificio:</label><br>
-    <input type="text" id="direccion_edificio" name="direccion_edificio" [(ngModel)]="incidencia().direccion_edificio"
-        required><br><br>
+        <div>
+          <label for="fecha_apertura" class="block text-sm font-medium text-text-secondary mb-2">
+            Fecha de apertura <span class="text-danger">*</span>
+          </label>
+          <input type="datetime-local"
+                 id="fecha_apertura"
+                 name="fecha_apertura"
+                 [(ngModel)]="incidencia().fecha_apertura"
+                 required
+                 class="w-full px-4 py-2.5 border border-slate-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition">
+        </div>
 
-    <label for="ubicacion_concreta">Ubicación concreta:</label><br>
-    <input type="text" id="ubicacion_concreta" name="ubicacion_concreta" [(ngModel)]="incidencia().ubicacion_concreta"
-        required><br><br>
+        <div>
+          <label for="fecha_cierre" class="block text-sm font-medium text-text-secondary mb-2">
+            Fecha de cierre
+          </label>
+          <input type="datetime-local"
+                 id="fecha_cierre"
+                 name="fecha_cierre"
+                 [(ngModel)]="incidencia().fecha_cierre"
+                 class="w-full px-4 py-2.5 border border-slate-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition">
+          <p class="text-xs text-text-secondary mt-1">Dejar vacío si aún está abierto</p>
+        </div>
 
-    <label for="contacto_incidencia">Contacto persona que reporta:</label><br>
-    <input type="text" id="contacto_incidencia" name="contacto_incidencia"
-        [(ngModel)]="incidencia().contacto_incidencia" required><br><br>
+        <div>
+          <label for="nombre_cliente" class="block text-sm font-medium text-text-secondary mb-2">
+            Nombre del cliente / comunidad <span class="text-danger">*</span>
+          </label>
+          <input type="text"
+                 id="nombre_cliente"
+                 name="nombre_cliente"
+                 [(ngModel)]="incidencia().nombre_cliente"
+                 required
+                 placeholder="Ej: Comunidad Sol y Mar"
+                 class="w-full px-4 py-2.5 border border-slate-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary">
+        </div>
 
-    <label>
-        <input type="checkbox" id="urgente" name="urgente" [(ngModel)]="incidencia().urgente">
-        Urgente
-    </label><br><br>
+        <div>
+          <label for="direccion_edificio" class="block text-sm font-medium text-text-secondary mb-2">
+            Dirección del edificio <span class="text-danger">*</span>
+          </label>
+          <input type="text"
+                 id="direccion_edificio"
+                 name="direccion_edificio"
+                 [(ngModel)]="incidencia().direccion_edificio"
+                 required
+                 placeholder="Calle, número, código postal, ciudad"
+                 class="w-full px-4 py-2.5 border border-slate-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary">
+        </div>
 
-    <label for="tecnico">Técnico asignado:</label><br>
-    <select id="tecnico" name="tecnico" [(ngModel)]="incidencia().tecnico" required>
-        <option value="">-- Seleccione técnico --</option>
-        <option value="tecnico1">Juan Pérez</option>
-        <option value="tecnico2">Ana Gómez</option>
-        <option value="tecnico3">Carlos López</option>
-        <option value="tecnico4">María Rodríguez</option>
-    </select><br><br>
+        <div>
+          <label for="ubicacion_concreta" class="block text-sm font-medium text-text-secondary mb-2">
+            Ubicación concreta <span class="text-danger">*</span>
+          </label>
+          <input type="text"
+                 id="ubicacion_concreta"
+                 name="ubicacion_concreta"
+                 [(ngModel)]="incidencia().ubicacion_concreta"
+                 required
+                 placeholder="Portal 2, 3ª planta..."
+                 class="w-full px-4 py-2.5 border border-slate-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary">
+        </div>
 
-    <label for="descripcion_breve">Descripción breve:</label><br>
-    <input type="text" id="descripcion_breve" name="descripcion_breve" [(ngModel)]="incidencia().descripcion_breve"
-        required><br><br>
+      </div>
 
-    <label for="descripcion_detalle">Detalle de la incidencia:</label><br>
-    <textarea id="descripcion_detalle" name="descripcion_detalle" rows="6"
-        [(ngModel)]="incidencia().descripcion_detalle" required></textarea><br><br>
+      <!-- Columna derecha -->
+      <div class="space-y-6">
 
-    <div class="acciones">
-        <button type="submit" [disabled]="form.invalid">Enviar Incidencia</button>
-        <button type="button" (click)="limpiar()">Limpiar formulario</button>
+        <div>
+          <label for="contacto_incidencia" class="block text-sm font-medium text-text-secondary mb-2">
+            Contacto que reporta <span class="text-danger">*</span>
+          </label>
+          <input type="text"
+                 id="contacto_incidencia"
+                 name="contacto_incidencia"
+                 [(ngModel)]="incidencia().contacto_incidencia"
+                 required
+                 placeholder="Nombre y teléfono"
+                 class="w-full px-4 py-2.5 border border-slate-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary">
+        </div>
+
+        <div class="flex items-center gap-4">
+          <input type="checkbox"
+                 id="urgente"
+                 name="urgente"
+                 [(ngModel)]="incidencia().urgente"
+                 class="w-5 h-5 text-danger rounded focus:ring-danger">
+          <label for="urgente" class="text-lg font-medium cursor-pointer select-none">
+            Incidencia URGENTE
+          </label>
+          <span class="badge badge-danger" *ngIf="incidencia().urgente">Prioridad alta</span>
+        </div>
+
+        <div>
+          <label for="tecnico" class="block text-sm font-medium text-text-secondary mb-2">
+            Técnico asignado <span class="text-danger">*</span>
+          </label>
+          <select id="tecnico"
+                  name="tecnico"
+                  [(ngModel)]="incidencia().tecnico"
+                  required
+                  class="w-full px-4 py-2.5 border border-slate-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary">
+            <option value="" disabled>-- Seleccione técnico --</option>
+            <option value="tecnico1">Juan Pérez</option>
+            <option value="tecnico2">Ana Gómez</option>
+            <option value="tecnico3">Carlos López</option>
+            <option value="tecnico4">María Rodríguez</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="descripcion_breve" class="block text-sm font-medium text-text-secondary mb-2">
+            Descripción breve <span class="text-danger">*</span>
+          </label>
+          <input type="text"
+                 id="descripcion_breve"
+                 name="descripcion_breve"
+                 [(ngModel)]="incidencia().descripcion_breve"
+                 required
+                 placeholder="Ej: Puerta garaje atascada"
+                 class="w-full px-4 py-2.5 border border-slate-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary">
+        </div>
+
+        <div>
+          <label for="descripcion_detalle" class="block text-sm font-medium text-text-secondary mb-2">
+            Detalle completo de la incidencia <span class="text-danger">*</span>
+          </label>
+          <textarea id="descripcion_detalle"
+                    name="descripcion_detalle"
+                    rows="6"
+                    [(ngModel)]="incidencia().descripcion_detalle"
+                    required
+                    placeholder="Describe con detalle qué pasa, desde cuándo..."
+                    class="w-full px-4 py-3 border border-slate-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary resize-vertical"></textarea>
+        </div>
+
+      </div>
     </div>
 
-</form>
+    <!-- Botones de acción -->
+    <div class="flex justify-end gap-4 mt-10 pt-8 border-t border-slate-200">
+      <button type="button" class="btn btn-outline" (click)="limpiar()">
+        Limpiar formulario
+      </button>
+      <button type="submit"
+              class="btn btn-primary"
+              [disabled]="form.invalid">
+        <span *ngIf="esEdicionMode(); else crearTexto">
+          Actualizar Parte
+        </span>
+        <ng-template #crearTexto>Crear Nuevo Parte</ng-template>
+      </button>
+    </div>
+
+  </form>
+</div>

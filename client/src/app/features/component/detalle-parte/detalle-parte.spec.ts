@@ -10,7 +10,7 @@ describe('DetalleParte', () => {
     await TestBed.configureTestingModule({
       imports: [DetalleParte]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(DetalleParte);
     component = fixture.componentInstance;
@@ -20,8 +20,4 @@ describe('DetalleParte', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-<<<<<<< HEAD
 });
-=======
-});
->>>>>>> 166c2cc14bb55f6e344576cdd29dbbcb5002888b

@@ -1,85 +1,88 @@
-<div class="listado-partes">
-  <h2>Listado de Partes de Trabajo</h2>
+<!-- listado-partes.html -->
+<div class="container py-8">
 
-  <!-- Filtros rápidos (opcional pero muy útil) -->
-  <div class="filtros">
-    <input 
-      type="text" 
-      placeholder="Buscar por cliente, dirección o nº parte..." 
-      [(ngModel)]="filtroTexto" 
-      (input)="aplicarFiltros()"
-      class="filtro-busqueda">
-    
-    <select [(ngModel)]="filtroUrgente" (change)="aplicarFiltros()">
-      <option [ngValue]="null">Todas las urgencias</option>
-      <option [ngValue]="true">Solo urgentes</option>
+  <h1 class="text-3xl font-bold text-primary mb-8">Listado de Partes de Trabajo</h1>
+
+  <!-- Filtros -->
+  <div class="card p-6 mb-8 flex flex-wrap gap-4 items-center">
+    <input type="text" placeholder="Buscar..." [(ngModel)]="filtroTexto" (input)="aplicarFiltros()"
+           class="px-4 py-2.5 border border-slate-300 rounded-md focus:ring-2 focus:ring-primary min-w-[250px] flex-1">
+    <select [(ngModel)]="filtroUrgente" (change)="aplicarFiltros()"
+            class="px-4 py-2.5 border border-slate-300 rounded-md focus:ring-2 focus:ring-primary">
+      <option [ngValue]="null">Todas</option>
+      <option [ngValue]="true">Urgentes</option>
       <option [ngValue]="false">No urgentes</option>
     </select>
-
-    <select [(ngModel)]="filtroEstado" (change)="aplicarFiltros()">
-      <option [ngValue]="null">Todos los estados</option>
+    <select [(ngModel)]="filtroEstado" (change)="aplicarFiltros()"
+            class="px-4 py-2.5 border border-slate-300 rounded-md focus:ring-2 focus:ring-primary">
+      <option [ngValue]="null">Todos</option>
       <option value="Abierto">Abierto</option>
-      <option value="En curso">En curso</option>
       <option value="Cerrado">Cerrado</option>
     </select>
+    <button *ngIf="filtroTexto || filtroUrgente !== null || filtroEstado"
+            class="btn btn-outline" (click)="limpiarFiltros()">
+      Limpiar
+    </button>
+    <button class="btn btn-primary ml-auto" routerLink="/crear-parte">
+      + Nuevo Parte
+    </button>
   </div>
 
-  <!-- Tabla de partes -->
-  <div class="tabla-container">
-    <table class="tabla-partes">
-      <thead>
-        <tr>
-          <th># Parte</th>
-          <th>Fecha apertura</th>
-          <th>Cliente</th>
-          <th>Dirección</th>
-          <th>Ubicación</th>
-          <th class="col-urgente">Urgente</th>
-          <th>Técnico</th>
-          <th>Estado</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-<!--         <tr *ngFor="let parte of partesFiltrados" 
-            [class.fila-urgente]="parte.urgente"
-            [routerLink]="['/partes', parte.id]"
-            class="fila-clickeable">
+  <!-- TABLA RESPONSIVE SIN SCROLL LATERAL -->
+  <div class="card overflow-hidden">
+    <div class="overflow-x-auto"> <!-- Este div permite scroll solo si es muy pequeño -->
+      <table class="w-full min-w-[900px]"> <!-- ← CLAVE: ancho mínimo razonable -->
+        <thead class="bg-surface text-text-secondary text-sm">
+          <tr>
+            <th class="text-left p-4 w-24">Parte</th>
+            <th class="text-left p-4 w-32">Fecha</th>
+            <th class="text-left p-4">Cliente</th>
+            <th class="text-left p-4">Dirección</th>
+            <th class="text-left p-4">Descripción</th>
+            <th class="text-center p-4 w-28">Urgente</th>
+            <th class="text-left p-4 w-40">Técnico</th>
+            <th class="text-center p-4 w-32">Estado</th>
+            <th class="text-center p-4 w-32">Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let parte of partesFiltrados()"
+              class="border-b hover:bg-surface/30 cursor-pointer transition"
+              (click)="verDetalle(parte.id)"
+              [class.border-l-4]="parte.urgente"
+              [class.border-l-danger]="parte.urgente">
 
-          <td><strong>#{{ parte.id }}</strong></td>
-          <td>{{ parte.fecha_apertura | date:'shortDate' }}</td>
-          <td>{{ parte.nombre_cliente }}</td>
-          <td>{{ parte.direccion_edificio }}</td>
-          <td>{{ parte.ubicacion_concreta }}</td>
-          <td class="col-urgente centro">
-            <span class="badge" [class.urgente]="parte.urgente">
-              {{ parte.urgente ? 'SÍ' : 'No' }}
-            </span>
-          </td>
-          <td>{{ parte.tecnico || '—' }}</td>
-          <td>
-            <span class="estado" [ngClass]="{
-              'estado-abierto': parte.estado === 'Abierto',
-              'estado-en-curso': parte.estado === 'En curso',
-              'estado-cerrado': parte.estado === 'Cerrado'
-            }">
-              {{ parte.estado }}
-            </span>
-          </td>
-          <td class="acciones">
-            <button class="btn-ver" 
-                    [routerLink]="['/partes', parte.id]" 
-                    (click)="$event.stopPropagation()">
-              Ver detalle
-            </button>
-          </td>
-        </tr> -->
-      </tbody>
-    </table>
+            <td class="p-4 font-bold text-primary">#{{ parte.id }}</td>
+            <td class="p-4 text-sm">{{ parte.fecha_apertura | date:'dd/MM/yy' }}</td>
+            <td class="p-4 font-medium truncate max-w-48">{{ parte.nombre_cliente }}</td>
+            <td class="p-4 text-sm truncate max-w-64">{{ parte.direccion_edificio }}</td>
+            <td class="p-4 text-sm truncate max-w-72">{{ parte.descripcion_breve }}</td>
+            <td class="p-4 text-center">
+              <span class="badge badge-danger text-xs" *ngIf="parte.urgente">SÍ</span>
+              <span class="text-xs text-text-secondary" *ngIf="!parte.urgente">No</span>
+            </td>
+            <td class="p-4 text-sm truncate max-w-40">{{ parte.tecnico || '—' }}</td>
+            <td class="p-4 text-center">
+              <span class="badge text-xs"
+                    [class.badge-warning]="parte.estado === 'Abierto'"
+                    [class.badge-success]="parte.estado === 'Cerrado'">
+                {{ parte.estado }}
+              </span>
+            </td>
+            <td class="p-4 text-center" (click)="$event.stopPropagation()">
+              <button class="btn btn-primary text-xs px-3 py-1.5" [routerLink]="['/partes', parte.id]">
+                Ver
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
-    <!-- Mensaje cuando no hay partes -->
-    <div *ngIf="partesFiltrados.length === 0" class="sin-resultados">
-      <p>No se encontraron partes con los filtros actuales.</p>
+    <!-- Sin resultados -->
+    <div *ngIf="partesFiltrados().length === 0" class="p-12 text-center text-text-secondary">
+      <p class="text-xl mb-4">No hay partes con estos filtros</p>
+      <button class="btn btn-outline" (click)="limpiarFiltros()">Quitar filtros</button>
     </div>
   </div>
 </div>

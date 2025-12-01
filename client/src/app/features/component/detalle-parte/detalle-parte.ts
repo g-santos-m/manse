@@ -62,6 +62,8 @@ export class DetalleParte implements OnInit {
   }
 
   editar() {
-    this.router.navigate(['/crear-parte', this.parte().id]);
-  }
+  this.router.navigate(['/crear-parte', this.parte().id], {
+    state: { parte: this.parte() }   // ← ¡¡ESTO ES LA CLAVE!!
+  });
+}
 }

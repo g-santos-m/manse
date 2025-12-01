@@ -24,20 +24,15 @@ interface Parte {
 @Component({
   selector: 'app-crear-parte',
   standalone: true,
-  imports: [
-    CommonModule,
-    DatePipe,
-    FormsModule
-  ],
+  imports: [CommonModule, DatePipe, FormsModule],
   templateUrl: './crear-parte.html',
-  styleUrl: './crear-parte.css',        // ← CORREGIDO: styleUrl (singular) + string
+  styleUrl: './crear-parte.css'
 })
 export class CrearParte implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
 
   title = signal('Crear nueva incidencia');
-
   incidencia = signal<Parte>({
     fecha_apertura: '',
     fecha_cierre: null,
@@ -51,44 +46,44 @@ export class CrearParte implements OnInit {
     descripcion_detalle: '',
     estado: 'Abierto'
   });
-
   esEdicion = signal(false);
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
 
     if (id) {
-      // MODO EDICIÓN
       this.esEdicion.set(true);
       this.title.set('Editar incidencia');
 
-      // Aquí cargarías los datos reales desde un servicio
-      // Simulación de datos para probar:
-      this.incidencia.set({
-        id,
-        fecha_apertura: '2025-11-17T10:30',
-        fecha_cierre: null,
-        nombre_cliente: 'Comunidad de Propietarios Sol y Mar',
-        direccion_edificio: 'Calle del Mar, 45, 29640 Fuengirola, Málaga',
-        ubicacion_concreta: 'Portal 2, escalera B, rellano 3º',
-        contacto_incidencia: 'Laura Sánchez – 654 321 987',
-        urgente: true,
-        tecnico: 'tecnico1',
-        descripcion_breve: 'Puerta de garaje no cierra completamente',
-        descripcion_detalle: `La puerta comunitaria del garaje se queda a medio cerrar,
+      // CAMBIO 1: Intentamos leer los datos que vienen del detalle
+      const datosDesdeDetalle = history.state.parte as Parte | undefined;
+
+      if (datosDesdeDetalle) {
+        this.incidencia.set(datosDesdeDetalle);
+      } else {
+        // CAMBIO 2: Fallback (solo si no hay datos en history)
+        this.incidencia.set({
+          id,
+          fecha_apertura: '2025-11-17T10:30',
+          fecha_cierre: null,
+          nombre_cliente: 'Comunidad de Propietarios Sol y Mar',
+          direccion_edificio: 'Calle del Mar, 45, 29640 Fuengirola, Málaga',
+          ubicacion_concreta: 'Portal 2, escalera B, rellano 3º',
+          contacto_incidencia: 'Laura Sánchez – 654 321 987',
+          urgente: true,
+          tecnico: 'tecnico1',
+          descripcion_breve: 'Puerta de garaje no cierra completamente',
+          descripcion_detalle: `La puerta comunitaria del garaje se queda a medio cerrar,
 emite un ruido fuerte y a veces se queda atascada.
 Los vecinos reportan que lleva pasando varios días y temen
 que quede abierta por la noche.`,
-        estado: 'Abierto'
-      });
+          estado: 'Abierto'
+        });
+      }
     } else {
-      // MODO CREACIÓN → ponemos fecha y hora actual por defecto
+      // Creación nueva
       const ahora = new Date().toISOString().slice(0, 16);
-      this.incidencia.update(p => ({
-        ...p,
-        fecha_apertura: ahora,
-        estado: 'Abierto'
-      }));
+      this.incidencia.update(p => ({ ...p, fecha_apertura: ahora }));
     }
   }
 
@@ -97,22 +92,16 @@ que quede abierta por la noche.`,
       this.esEdicion() ? 'Incidencia actualizada:' : 'Nueva incidencia creada:',
       this.incidencia()
     );
-
     alert(
       this.esEdicion()
         ? '¡Incidencia actualizada correctamente!'
         : '¡Incidencia creada correctamente!'
     );
-
-    // Aquí iría la llamada real al backend
-    // this.partesService.crearOActualizar(this.incidencia());
-
     this.router.navigate(['/listado-partes']);
   }
 
   limpiar(): void {
     const fechaActual = this.esEdicion() ? this.incidencia().fecha_apertura : new Date().toISOString().slice(0, 16);
-
     this.incidencia.set({
       fecha_apertura: fechaActual,
       fecha_cierre: null,
@@ -128,7 +117,6 @@ que quede abierta por la noche.`,
     });
   }
 
-  // Para usar en el HTML
   esEdicionMode(): boolean {
     return this.esEdicion();
   }

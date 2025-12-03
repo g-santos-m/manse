@@ -26,4 +26,8 @@ export class ParteService {
     deleteParte = (id: number) => {
         this.http.delete(`${this.apiUrl}/parte/${id}`);
     }
+
+    getParteById(id: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/partes/${id}`);
+    }
 }

@@ -42,7 +42,6 @@
             <th class="text-center p-4 w-28">Urgente</th>
             <th class="text-left p-4 w-40">Técnico</th>
             <th class="text-center p-4 w-32">Estado</th>
-            <th class="text-center p-4 w-32">Acción</th>
           </tr>
         </thead>
         <tbody>
@@ -61,7 +60,7 @@
               <span class="badge badge-danger text-xs" *ngIf="parte.urgente">SÍ</span>
               <span class="text-xs text-text-secondary" *ngIf="!parte.urgente">No</span>
             </td>
-            <td class="p-4 text-sm truncate max-w-40">{{ parte.tecnico || '—' }}</td>
+            <td class="p-4 text-sm truncate max-w-40">{{ getNombreTecnico(parte.tecnico) || '—' }}</td>
             <td class="p-4 text-center">
               <span class="badge text-xs"
                     [class.badge-warning]="parte.estado === 'Abierto'"

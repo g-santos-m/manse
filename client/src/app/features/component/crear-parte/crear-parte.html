@@ -87,7 +87,7 @@
                  name="contacto_incidencia"
                  [(ngModel)]="incidencia().contacto_incidencia"
                  required
-                 placeholder="Nombre y teléfono"
+                 placeholder="Nombre"
                  class="w-full px-4 py-2.5 border border-slate-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary">
         </div>
 
@@ -107,16 +107,19 @@
           <label for="tecnico" class="block text-sm font-medium text-text-secondary mb-2">
             Técnico asignado <span class="text-danger">*</span>
           </label>
+          
           <select id="tecnico"
                   name="tecnico"
                   [(ngModel)]="incidencia().tecnico"
                   required
                   class="w-full px-4 py-2.5 border border-slate-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary">
+            
             <option value="" disabled>-- Seleccione técnico --</option>
-            <option value="tecnico1">Juan Pérez</option>
-            <option value="tecnico2">Ana Gómez</option>
-            <option value="tecnico3">Carlos López</option>
-            <option value="tecnico4">María Rodríguez</option>
+            
+            <option *ngFor="let tech of listaTecnicos" [value]="tech.id">
+              {{ tech.nombre }}
+            </option>
+
           </select>
         </div>
 

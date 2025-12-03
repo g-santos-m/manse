@@ -6,12 +6,20 @@ import { ListadoPartes } from './features/component/listado-partes/listado-parte
 
 export const routes: Routes = [
   { path: 'crear-parte', component: CrearParte },
-  { path: 'detalle-parte', component: DetalleParte },
+  
+  // Esta ruta sobra si siempre necesitas un ID para ver el detalle
+  { path: 'detalle-parte', component: DetalleParte }, 
+  
   { path: 'listado-partes', component: ListadoPartes},
+
+  // 👇 AQUÍ ESTABA EL ERROR 👇
+  // Antes tenías: 'detalle-partes/:id'
+  // Debe ser 'partes/:id' para coincidir con tu [routerLink]="['/partes', id]"
+  { path: 'partes/:id', component: DetalleParte },
 
   { path: '', redirectTo: '/listado-partes', pathMatch: 'full' },
   
-  { path: '**', redirectTo: '/listado-partes' }
+  //{ path: '**', redirectTo: '/listado-partes' }
 ];
 
 @NgModule({

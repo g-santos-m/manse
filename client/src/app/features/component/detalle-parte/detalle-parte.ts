@@ -1,69 +1,75 @@
-// detalle-parte.component.ts
-import { Component, signal, OnInit, inject } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
+import { CommonModule } from '@angular/common'; 
 import { ActivatedRoute, Router } from '@angular/router';
-import { CommonModule, DatePipe } from '@angular/common';   // ← Añadido
+import { ParteService } from '../../../services/parte-service';
+import { Parte } from '../../../interfaces/interfaces';
 
 @Component({
   selector: 'app-detalle-parte',
   standalone: true,
-  imports: [
-    CommonModule,     // ← Necesario para *ngIf, [class.xxx], etc.
-    DatePipe          // ← Necesario para usar | date en el HTML
-  ],
+  imports: [CommonModule],
   templateUrl: './detalle-parte.html',
   styleUrl: './detalle-parte.css'
 })
 export class DetalleParte implements OnInit {
+
+  listaTecnicos = [
+    { id: 'tecnico1', nombre: 'Juan Pérez' },
+    { id: 'tecnico2', nombre: 'Ana Gómez' },
+    { id: 'tecnico3', nombre: 'Carlos López' },
+    { id: 'tecnico4', nombre: 'María Rodríguez' },
+    { id: 'tecnico5', nombre: 'Ninguno' }
+  ];
+
   private route = inject(ActivatedRoute);
   private router = inject(Router);
+  private parteService = inject(ParteService);
 
-  protected readonly title = signal('Detalle del Parte');
+  parte = signal<Parte | null>(null);
 
-  parte = signal({
-    id: '',
-    fecha_apertura: '',
-    fecha_cierre: null as string | null,
-    nombre_cliente: '',
-    direccion_edificio: '',
-    ubicacion_concreta: '',
-    contacto_incidencia: '',
-    urgente: false,
-    tecnico: '',
-    descripcion_breve: '',
-    descripcion_detalle: '',
-    estado: 'Abierto' as 'Abierto' | 'Cerrado'
-  });
-
-  ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id') ?? '123';
-
-    // Datos de ejemplo (simulando que vienen del backend)
-    this.parte.set({
-      id,
-      fecha_apertura: '2025-11-17T10:30:00',
-      fecha_cierre: null,
-      nombre_cliente: 'Comunidad de Propietarios Sol y Mar',
-      direccion_edificio: 'Calle del Mar, 45, 29640 Fuengirola, Málaga',
-      ubicacion_concreta: 'Portal 2, escalera B, rellano 3º',
-      contacto_incidencia: 'Laura Sánchez – 654 321 987',
-      urgente: true,
-      tecnico: 'Juan Pérez',
-      descripcion_breve: 'Puerta de garaje no cierra completamente',
-      descripcion_detalle: `La puerta comunitaria del garaje se queda a medio cerrar,
-      emite un ruido fuerte y a veces se queda atascada.
-      Los vecinos reportan que lleva pasando varios días y temen
-      que quede abierta por la noche.`,
-      estado: 'Abierto'
-    });
+  getNombreTecnico(codigo: string | null | undefined): string {
+    if (!codigo) return '— Sin asignar';
+    const tecnico = this.listaTecnicos.find(t => t.id === codigo);
+    return tecnico ? tecnico.nombre : codigo; 
   }
 
-  volver() {
+  ngOnInit(): void {
+    const idUrl = this.route.snapshot.paramMap.get('id');
+    console.log('--- BUSCANDO PARTE ID:', idUrl, ' ---');
+
+    if (idUrl) {
+      this.parteService.getPartes().subscribe({
+        next: (res: any) => {
+          let lista: any[] = [];
+          if (Array.isArray(res)) {
+            lista = res;
+          } else if (res.data && Array.isArray(res.data)) {
+            lista = res.data;
+          }
+
+          const encontrado = lista.find((p: any) => p.id == idUrl);
+
+          if (encontrado) {
+            encontrado.urgente = (encontrado.urgente == 1 || encontrado.urgente === true);
+            this.parte.set(encontrado);
+          } else {
+            console.error('❌ No se encontró el ID en la lista');
+          }
+        },
+        error: (err) => console.error('Error de red:', err)
+      });
+    }
+  }
+
+  volver(): void {
     this.router.navigate(['/listado-partes']);
   }
 
-  editar() {
-  this.router.navigate(['/crear-parte', this.parte().id], {
-    state: { parte: this.parte() }   // ← ¡¡ESTO ES LA CLAVE!!
-  });
-}
+  // --- CORREGIDO: Navega a la ruta de edición ---
+  editar(): void {
+    const p = this.parte();
+    if (p && p.id) {
+      this.router.navigate(['/editar-parte', p.id]);
+    }
+  }
 }

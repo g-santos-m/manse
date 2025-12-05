@@ -1,10 +1,9 @@
-// listado-partes.component.ts
-import { Component, signal, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { Parte } from '../../../interfaces/interfaces';
 import { ParteService } from '../../../services/parte-service';
+import { Parte } from '../../../interfaces/interfaces';
 
 @Component({
   selector: 'app-listado-partes',
@@ -15,67 +14,63 @@ import { ParteService } from '../../../services/parte-service';
 })
 export class ListadoPartes implements OnInit {
 
-  private readonly parteService = new ParteService();
+  listaTecnicos = [
+    { id: 'tecnico1', nombre: 'Juan Pérez' },
+    { id: 'tecnico2', nombre: 'Ana Gómez' },
+    { id: 'tecnico3', nombre: 'Carlos López' },
+    { id: 'tecnico4', nombre: 'María Rodríguez' },
+    { id: 'tecnico5', nombre: 'Ninguno' }
+  ];
 
-  partes = signal<Parte[]>([
-    { id: 101, fecha_apertura: '2025-11-25', nombre_cliente: 'Ana García', direccion_edificio: 'Calle Mayor 45, Madrid', ubicacion_concreta: 'Portal 2, 3ºB', urgente: true, estado: 'Abierto', descripcion_breve: 'Ruido fuerte en caldera' },
-    { id: 102, fecha_apertura: '2025-11-20', fecha_cierre: '2025-11-22', nombre_cliente: 'Comunidad Sol y Luna', direccion_edificio: 'Av. del Sol 12, Valencia', ubicacion_concreta: 'Ascensor 1', urgente: false, tecnico: 'Pedro Martínez', estado: 'Cerrado', descripcion_breve: 'Ascensor parado entre plantas' },
-    { id: 103, fecha_apertura: '2025-11-27', nombre_cliente: 'Carlos Ruiz', direccion_edificio: 'Paseo Marítimo 8, Málaga', ubicacion_concreta: 'Aire acondicionado salón', urgente: true, estado: 'Abierto', descripcion_breve: 'No enfría' },
-    { id: 104, fecha_apertura: '2025-11-15', nombre_cliente: 'Hotel Paraíso', direccion_edificio: 'Playa del Inglés 1, Gran Canaria', ubicacion_concreta: 'Piscina', urgente: false, estado: 'Abierto', descripcion_breve: 'Filtro piscina atascado' }
-  ]);
+  // 1. Inyección correcta del servicio (no usar new)
+  private parteService = inject(ParteService);
+  private router = inject(Router);
 
-  partesFiltrados = signal<Parte[]>([]);
-  parteTemp: Parte[] = [];
-
+  // Usamos una señal para los datos o un array simple. 
+  // Para simplificar y que coincida con tu HTML actual usaremos parteTemp como array principal
+  parteTemp: Parte[] = []; 
+  
+  // Variables para filtros (opcionales por ahora)
   filtroTexto = '';
   filtroUrgente: boolean | null = null;
   filtroEstado: 'Abierto' | 'Cerrado' | null = null;
-
-  constructor(private router: Router) {}
+  partesFiltrados = signal<Parte[]>([]); // Si usas filtrado más adelante
 
   ngOnInit(): void {
-    this.parteService.getPartes().subscribe({
-      next: (res) => {
-        console.log(res);
-        this.parteTemp = res.data;
-      },
-    });
-    console.log(this.parteTemp);
-    //this.aplicarFiltros();
+    this.cargarPartes();
   }
 
-/*   aplicarFiltros(): void {
-    let resultado = this.partes();
+  cargarPartes() {
+    this.parteService.getPartes().subscribe({
+      next: (res) => {
+        if(res.success) {
+          this.parteTemp = res.data;
+          this.partesFiltrados.set(res.data); // Sincronizamos para cuando actives filtros
+        }
+      },
+      error: (err) => console.error('Error cargando partes', err)
+    });
+  }
 
-    if (this.filtroTexto.trim()) {
-      const texto = this.filtroTexto.toLowerCase().trim();
-      resultado = resultado.filter(p =>
-        p.id.toString().includes(texto) ||
-        p.nombre_cliente.toLowerCase().includes(texto) ||
-        p.direccion_edificio.toLowerCase().includes(texto) ||
-        p.descripcion_breve.toLowerCase().includes(texto)
-      );
+  // Navegación al detalle
+  verDetalle(id?: number): void {
+    if (id) {
+      this.router.navigate(['/partes', id]);
     }
+  }
 
-    if (this.filtroUrgente !== null) {
-      resultado = resultado.filter(p => p.urgente === this.filtroUrgente);
-    }
-
-    if (this.filtroEstado) {
-      resultado = resultado.filter(p => p.estado === this.filtroEstado);
-    }
-
-    this.partesFiltrados.set(resultado);
-  } */
-
+  // Funciones de utilidad para el HTML
   limpiarFiltros(): void {
     this.filtroTexto = '';
     this.filtroUrgente = null;
     this.filtroEstado = null;
-    //this.aplicarFiltros();
+    // Aquí llamarías a tu lógica de filtros si la descomentas
   }
 
-  verDetalle(id?: number): void {
-    this.router.navigate(['/partes', id]);
+  getNombreTecnico(codigo: string | null | undefined): string {
+    if (!codigo) return '—';
+    const tecnico = this.listaTecnicos.find(t => t.id === codigo);
+    return tecnico ? tecnico.nombre : codigo;
   }
+
 }

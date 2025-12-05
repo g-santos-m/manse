@@ -10,7 +10,7 @@ export interface Parte {
   tecnico?: string;
   descripcion_breve: string;
   descripcion_detalle?: string;
-  estado: 'Abierto' | 'En curso' | 'Cerrado';
+  estado: 'Abierto' | 'Cerrado';
 }
 
 export interface ApiResponse<T> {

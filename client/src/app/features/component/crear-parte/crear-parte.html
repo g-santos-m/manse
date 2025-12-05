@@ -114,6 +114,10 @@
       <button type="button" class="btn btn-outline" (click)="cancelarAccion()">
         Cancelar
       </button>
+      
+      <button *ngIf="esEdicionMode()" type="button" class="btn btn-danger" (click)="borrarParte()">
+        Borrar
+      </button>
 
       <!-- BOTÓN UNIFICADO: Siempre usa 'btn btn-primary' según tus estilos CSS -->
       <button type="submit" 

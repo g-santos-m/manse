@@ -7,7 +7,6 @@ const router = express.Router();
 router.get('/partes', (req, res) => {
     try {
         const partes: Parte[] = getAll();
-        console.log(partes)
         res.send({ success: true, data: partes });
     } catch (error) {
         console.log(error)
@@ -28,7 +27,8 @@ router.post('/parte', (req, res) => {
 
 router.put('/parte', (req, res) => {
     try {
-        const parte: Parte = JSON.parse(req.body);
+        const parte: Parte = req.body;
+        console.log(req.body)
         update(parte);
         res.send({ success: true, data: null });
     } catch (error) {
@@ -37,9 +37,9 @@ router.put('/parte', (req, res) => {
     }
 })
 
-router.delete('/parte', (req, res) => {
+router.delete('/parte/:id', (req, res) => {
     try {
-        const id: number = Number(req.body);
+        const id: Number = Number(req.params.id);
         remove(id);
         res.send({ success: true, data: null });
     } catch (error) {

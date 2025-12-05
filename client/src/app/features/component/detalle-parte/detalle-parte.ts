@@ -24,6 +24,7 @@ export class DetalleParte implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private parteService = inject(ParteService);
+  private idUrl = this.route.snapshot.paramMap.get('id');
 
   parte = signal<Parte | null>(null);
 
@@ -34,10 +35,9 @@ export class DetalleParte implements OnInit {
   }
 
   ngOnInit(): void {
-    const idUrl = this.route.snapshot.paramMap.get('id');
-    console.log('--- BUSCANDO PARTE ID:', idUrl, ' ---');
+    console.log('--- BUSCANDO PARTE ID:', this.idUrl, ' ---');
 
-    if (idUrl) {
+    if (this.idUrl) {
       this.parteService.getPartes().subscribe({
         next: (res: any) => {
           let lista: any[] = [];
@@ -47,7 +47,7 @@ export class DetalleParte implements OnInit {
             lista = res.data;
           }
 
-          const encontrado = lista.find((p: any) => p.id == idUrl);
+          const encontrado = lista.find((p: any) => p.id == this.idUrl);
 
           if (encontrado) {
             encontrado.urgente = (encontrado.urgente == 1 || encontrado.urgente === true);
@@ -71,5 +71,12 @@ export class DetalleParte implements OnInit {
     if (p && p.id) {
       this.router.navigate(['/editar-parte', p.id]);
     }
+  }
+
+  borrarParte(): void {
+    this.parteService.deleteParte(Number(this.idUrl)).subscribe({
+      next: () => console.log("Parte borrado.")
+    });
+    this.router.navigate(['/listado-partes'])
   }
 }

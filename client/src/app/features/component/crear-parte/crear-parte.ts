@@ -27,7 +27,7 @@ export class CrearParte implements OnInit {
     { id: 'tecnico5', nombre: 'Ninguno' }
   ];
 
-  title = signal('Crear nueva incidencia');
+  title = signal('Crear Nueva Incidencia');
   esEdicion = signal(false);
 
   incidencia = signal<Parte>({
@@ -47,7 +47,7 @@ export class CrearParte implements OnInit {
   ngOnInit(): void {
     if (this.idUrl) {
       this.esEdicion.set(true);
-      this.title.set('Editar incidencia #' + this.idUrl);
+      this.title.set('Editar Incidencia #' + this.idUrl);
       this.cargarDatosEdicion(Number(this.idUrl));
     }
   }

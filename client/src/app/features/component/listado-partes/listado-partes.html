@@ -1,52 +1,106 @@
-<!-- listado-partes.html -->
 <div class="container py-8">
 
   <h1 class="text-3xl font-bold text-primary mb-8">Listado de Partes de Trabajo</h1>
 
-  <!-- Filtros -->
-  <div class="card p-6 mb-8 flex flex-wrap gap-4 items-center">
-    <input type="text" placeholder="Buscar..." [(ngModel)]="filtroTexto"
-           class="px-4 py-2.5 border border-slate-300 rounded-md focus:ring-2 focus:ring-primary min-w-[250px] flex-1">
-    <select [(ngModel)]="filtroUrgente"
-            class="px-4 py-2.5 border border-slate-300 rounded-md focus:ring-2 focus:ring-primary">
-      <option [ngValue]="null">Todas</option>
-      <option [ngValue]="true">Urgentes</option>
-      <option [ngValue]="false">No urgentes</option>
-    </select>
-    <select [(ngModel)]="filtroEstado"
-            class="px-4 py-2.5 border border-slate-300 rounded-md focus:ring-2 focus:ring-primary">
-      <option [ngValue]="null">Todos</option>
-      <option value="Abierto">Abierto</option>
-      <option value="Cerrado">Cerrado</option>
-    </select>
-    <button *ngIf="filtroTexto || filtroUrgente !== null || filtroEstado"
-            class="btn btn-outline" (click)="limpiarFiltros()">
-      Limpiar
-    </button>
-    <button class="btn btn-primary ml-auto" routerLink="/crear-parte">
-      + Nuevo Parte
-    </button>
+  <div class="card p-6 mb-8 flex flex-wrap gap-4 items-end">
+    
+    <div class="flex-1 min-w-[200px]">
+      <label class="block text-xs font-semibold text-text-secondary mb-1">Buscar</label>
+      <input type="text" placeholder="Cliente, dirección..." [(ngModel)]="filtroTexto"
+             (ngModelChange)="aplicarFiltros()"
+             class="w-full px-4 py-2.5 border border-slate-300 rounded-md focus:ring-2 focus:ring-primary">
+    </div>
+
+    <div>
+      <label class="block text-xs font-semibold text-text-secondary mb-1">Desde</label>
+      <input type="date" [(ngModel)]="filtroFechaDesde" (change)="aplicarFiltros()"
+             class="px-4 py-2.5 border border-slate-300 rounded-md focus:ring-2 focus:ring-primary text-text-secondary">
+    </div>
+
+    <div>
+      <label class="block text-xs font-semibold text-text-secondary mb-1">Hasta</label>
+      <input type="date" [(ngModel)]="filtroFechaHasta" (change)="aplicarFiltros()"
+             class="px-4 py-2.5 border border-slate-300 rounded-md focus:ring-2 focus:ring-primary text-text-secondary">
+    </div>
+
+    <div>
+      <label class="block text-xs font-semibold text-text-secondary mb-1">Técnico</label>
+      <select [(ngModel)]="filtroTecnico" (change)="aplicarFiltros()"
+              class="px-4 py-2.5 border border-slate-300 rounded-md focus:ring-2 focus:ring-primary min-w-[140px]">
+        <option [ngValue]="null">Todos</option>
+        <option *ngFor="let tec of listaTecnicos" [value]="tec.id">
+          {{ tec.nombre }}
+        </option>
+      </select>
+    </div>
+
+    <div>
+      <label class="block text-xs font-semibold text-text-secondary mb-1">Estado</label>
+      <select [(ngModel)]="filtroEstado" (change)="aplicarFiltros()"
+              class="px-4 py-2.5 border border-slate-300 rounded-md focus:ring-2 focus:ring-primary min-w-[120px]">
+        <option [ngValue]="null">Todos</option>
+        <option value="Abierto">Abierto</option>
+        <option value="Cerrado">Cerrado</option>
+      </select>
+    </div>
+
+    <div>
+      <label class="block text-xs font-semibold text-text-secondary mb-1">Prioridad</label>
+      <select [(ngModel)]="filtroUrgente" (change)="aplicarFiltros()"
+              class="px-4 py-2.5 border border-slate-300 rounded-md focus:ring-2 focus:ring-primary min-w-[120px]">
+        <option [ngValue]="null">Todas</option>
+        <option [ngValue]="true">Urgentes</option>
+        <option [ngValue]="false">Normal</option>
+      </select>
+    </div>
+
+    <div class="flex gap-2 pb-0.5"> 
+      <button *ngIf="filtroTexto || filtroUrgente !== null || filtroEstado || filtroFechaDesde || filtroFechaHasta || filtroTecnico"
+              class="btn btn-outline h-[46px]" (click)="limpiarFiltros()">
+        Limpiar
+      </button>
+      
+      <button class="btn btn-primary h-[46px]" routerLink="/crear-parte">
+        + Nuevo
+      </button>
+    </div>
+
   </div>
 
-  <!-- TABLA RESPONSIVE SIN SCROLL LATERAL -->
   <div class="card overflow-hidden">
-    <div class="overflow-x-auto"> <!-- Este div permite scroll solo si es muy pequeño -->
-      <table class="w-full min-w-[900px]"> <!-- ← CLAVE: ancho mínimo razonable -->
-        <thead class="bg-surface text-text-secondary text-sm">
+    <div class="overflow-x-auto">
+      <table class="w-full min-w-[900px]">
+        
+        <thead class="bg-surface text-text-secondary text-sm select-none">
           <tr>
-            <th class="text-left p-4 w-24">Parte</th>
-            <th class="text-left p-4 w-32">Fecha</th>
-            <th class="text-left p-4">Cliente</th>
-            <th class="text-left p-4">Dirección</th>
+            <th class="p-4 w-24 cursor-pointer hover:text-primary transition" (click)="ordenar('id')">
+              <div class="flex items-center gap-1">Parte <span *ngIf="columnaOrden === 'id'" class="text-xs font-bold">{{ direccionOrden === 'asc' ? '↑' : '↓' }}</span></div>
+            </th>
+            <th class="p-4 w-32 cursor-pointer hover:text-primary transition" (click)="ordenar('fecha_apertura')">
+              <div class="flex items-center gap-1">Fecha <span *ngIf="columnaOrden === 'fecha_apertura'" class="text-xs font-bold">{{ direccionOrden === 'asc' ? '↑' : '↓' }}</span></div>
+            </th>
+            <th class="p-4 cursor-pointer hover:text-primary transition" (click)="ordenar('nombre_cliente')">
+              <div class="flex items-center gap-1">Cliente <span *ngIf="columnaOrden === 'nombre_cliente'" class="text-xs font-bold">{{ direccionOrden === 'asc' ? '↑' : '↓' }}</span></div>
+            </th>
+            <th class="p-4 cursor-pointer hover:text-primary transition" (click)="ordenar('direccion_edificio')">
+              <div class="flex items-center gap-1">Dirección <span *ngIf="columnaOrden === 'direccion_edificio'" class="text-xs font-bold">{{ direccionOrden === 'asc' ? '↑' : '↓' }}</span></div>
+            </th>
             <th class="text-left p-4">Descripción</th>
-            <th class="text-center p-4 w-28">Urgente</th>
-            <th class="text-left p-4 w-40">Técnico</th>
-            <th class="text-center p-4 w-32">Estado</th>
+            <th class="p-4 w-28 cursor-pointer hover:text-primary transition" (click)="ordenar('urgente')">
+              <div class="flex items-center justify-center gap-1">Urgente <span *ngIf="columnaOrden === 'urgente'" class="text-xs font-bold">{{ direccionOrden === 'asc' ? '↑' : '↓' }}</span></div>
+            </th>
+            <th class="p-4 w-40 cursor-pointer hover:text-primary transition" (click)="ordenar('tecnico')">
+              <div class="flex items-center gap-1">Técnico <span *ngIf="columnaOrden === 'tecnico'" class="text-xs font-bold">{{ direccionOrden === 'asc' ? '↑' : '↓' }}</span></div>
+            </th>
+            <th class="p-4 w-32 cursor-pointer hover:text-primary transition" (click)="ordenar('estado')">
+              <div class="flex items-center justify-center gap-1">Estado <span *ngIf="columnaOrden === 'estado'" class="text-xs font-bold">{{ direccionOrden === 'asc' ? '↑' : '↓' }}</span></div>
+            </th>
             <th class="text-center p-4 w-32">Acción</th>
           </tr>
         </thead>
+
         <tbody>
-          <tr *ngFor="let parte of parteTemp"
+          <tr *ngFor="let parte of partesFiltrados()"
               class="border-b hover:bg-surface/30 cursor-pointer transition"
               (click)="verDetalle(parte.id)"
               [class.border-l-4]="parte.urgente"
@@ -57,11 +111,14 @@
             <td class="p-4 font-medium truncate max-w-48">{{ parte.nombre_cliente }}</td>
             <td class="p-4 text-sm truncate max-w-64">{{ parte.direccion_edificio }}</td>
             <td class="p-4 text-sm truncate max-w-72">{{ parte.descripcion_breve }}</td>
+            
             <td class="p-4 text-center">
               <span class="badge badge-danger text-xs" *ngIf="parte.urgente">SÍ</span>
               <span class="text-xs text-text-secondary" *ngIf="!parte.urgente">No</span>
             </td>
+            
             <td class="p-4 text-sm truncate max-w-40">{{ getNombreTecnico(parte.tecnico) || '—' }}</td>
+            
             <td class="p-4 text-center">
               <span class="badge text-xs"
                     [class.badge-warning]="parte.estado === 'Abierto'"
@@ -69,17 +126,15 @@
                 {{ parte.estado }}
               </span>
             </td>
+            
             <td class="p-4 text-center" (click)="$event.stopPropagation()">
-              <button class="btn btn-primary text-xs px-3 py-1.5" [routerLink]="['/partes', parte.id]">
-                Ver
-              </button>
+              <button class="btn btn-primary text-xs px-3 py-1.5" [routerLink]="['/partes', parte.id]">Ver</button>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
 
-    <!-- Sin resultados -->
     <div *ngIf="partesFiltrados().length === 0" class="p-12 text-center text-text-secondary">
       <p class="text-xl mb-4">No hay partes con estos filtros</p>
       <button class="btn btn-outline" (click)="limpiarFiltros()">Quitar filtros</button>

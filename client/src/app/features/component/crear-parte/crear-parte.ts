@@ -26,7 +26,7 @@ export class CrearParte implements OnInit {
     { id: 'tecnico5', nombre: 'Ninguno' }
   ];
 
-  title = signal('Crear nueva incidencia');
+  title = signal('Crear Nueva Incidencia');
   esEdicion = signal(false);
 
   incidencia = signal<Parte>({
@@ -47,7 +47,7 @@ export class CrearParte implements OnInit {
     const idUrl = this.route.snapshot.paramMap.get('id');
     if (idUrl) {
       this.esEdicion.set(true);
-      this.title.set('Editar incidencia #' + idUrl);
+      this.title.set('Editar Incidencia #' + idUrl);
       this.cargarDatosEdicion(Number(idUrl));
     }
   }

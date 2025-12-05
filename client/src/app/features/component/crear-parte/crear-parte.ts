@@ -139,10 +139,13 @@ export class CrearParte implements OnInit {
   }
 
   borrarParte() {
-    this.parteService.deleteParte(Number(this.idUrl)).subscribe({
-      next: () => console.log("Parte borrado.")
-    });
-    this.router.navigate(['/listado-partes'])
+    const confirmar = confirm("¿Seguro que quieres borrar el parte?")
+    if (confirmar) {
+      this.parteService.deleteParte(Number(this.idUrl)).subscribe({
+        next: () => console.log("Parte borrado.")
+      });
+      this.router.navigate(['/listado-partes'])
+    }
   }
 
   // Genera fecha actual para nuevos partes

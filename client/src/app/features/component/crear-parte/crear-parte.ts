@@ -17,6 +17,7 @@ export class CrearParte implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private parteService = inject(ParteService);
+  private idUrl = this.route.snapshot.paramMap.get('id');
 
   listaTecnicos = [
     { id: 'tecnico1', nombre: 'Juan Pérez' },
@@ -44,11 +45,10 @@ export class CrearParte implements OnInit {
   });
 
   ngOnInit(): void {
-    const idUrl = this.route.snapshot.paramMap.get('id');
-    if (idUrl) {
+    if (this.idUrl) {
       this.esEdicion.set(true);
-      this.title.set('Editar incidencia #' + idUrl);
-      this.cargarDatosEdicion(Number(idUrl));
+      this.title.set('Editar incidencia #' + this.idUrl);
+      this.cargarDatosEdicion(Number(this.idUrl));
     }
   }
 
@@ -136,6 +136,13 @@ export class CrearParte implements OnInit {
 
   esEdicionMode(): boolean {
     return this.esEdicion();
+  }
+
+  borrarParte() {
+    this.parteService.deleteParte(Number(this.idUrl)).subscribe({
+      next: () => console.log("Parte borrado.")
+    });
+    this.router.navigate(['/listado-partes'])
   }
 
   // Genera fecha actual para nuevos partes

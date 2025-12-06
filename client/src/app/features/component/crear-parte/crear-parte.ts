@@ -1,7 +1,7 @@
 import { Component, signal, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CommonModule} from '@angular/common'; // Asegúrate de importar DatePipe
+import { CommonModule} from '@angular/common';
 import { ParteService } from '../../../services/parte-service';
 import { Parte } from '../../../interfaces/interfaces';
 
@@ -58,10 +58,9 @@ export class CrearParte implements OnInit {
         const encontrado = lista.find((p: any) => p.id == id);
         
         if (encontrado) {
-          // 1. Corregir booleano urgente
           encontrado.urgente = (encontrado.urgente == 1 || encontrado.urgente === true);
           
-          // 2. Formatear fechas para datetime-local
+          // Formatear fechas
           if(encontrado.fecha_apertura) {
              encontrado.fecha_apertura = this.formatDateForInput(encontrado.fecha_apertura);
           }
@@ -69,29 +68,24 @@ export class CrearParte implements OnInit {
              encontrado.fecha_cierre = this.formatDateForInput(encontrado.fecha_cierre);
           }
 
-          // 3. CORRECCIÓN TÉCNICO ROBUSTA
-          // Normalizamos el valor que viene de la BD a String o cadena vacía
           let tecnicoNormalizado = '';
           if (encontrado.tecnico !== null && encontrado.tecnico !== undefined) {
              tecnicoNormalizado = String(encontrado.tecnico);
           }
 
-          // Verificación de seguridad: ¿Existe este técnico en nuestra lista local?
+          // Verificación
           const existeEnLista = this.listaTecnicos.some(t => t.id === tecnicoNormalizado);
           
           if (!existeEnLista && tecnicoNormalizado !== '') {
-            console.warn(`⚠️ ATENCIÓN: El técnico recibido de la BD ("${tecnicoNormalizado}") NO existe en la lista de opciones del select.`);
+            console.warn('ATENCIÓN: El técnico recibido de la BD ("${tecnicoNormalizado}") NO existe en la lista de opciones del select.');
             console.log('Opciones disponibles:', this.listaTecnicos.map(t => t.id));
-            // Opcional: Si quieres forzar que se vea "Ninguno" si el dato es incorrecto:
-            // tecnicoNormalizado = ''; 
           }
 
           // Asignamos el valor normalizado
           encontrado.tecnico = tecnicoNormalizado;
 
-          console.log('✅ Datos cargados en formulario:', encontrado);
+          console.log('Datos cargados en formulario:', encontrado);
 
-          // Usamos spread operator (...) para romper la referencia y asegurar que la vista se actualice
           this.incidencia.set({ ...encontrado });
         }
       },
@@ -147,6 +141,7 @@ export class CrearParte implements OnInit {
     }
   }
 
+  //Ayuda Gemini
   // Genera fecha actual para nuevos partes
   private getFechaActualFormat(): string {
     const now = new Date();

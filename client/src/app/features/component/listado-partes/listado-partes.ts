@@ -19,7 +19,7 @@ export class ListadoPartes implements OnInit {
     { id: 'tecnico2', nombre: 'Ana Gómez' },
     { id: 'tecnico3', nombre: 'Carlos López' },
     { id: 'tecnico4', nombre: 'María Rodríguez' },
-    // CAMBIO 1: Asignamos un ID especial 'ninguno' para identificar esta opción
+    
     { id: 'ninguno', nombre: 'Ninguno' }
   ];
 

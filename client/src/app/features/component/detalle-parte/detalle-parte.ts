@@ -79,9 +79,12 @@ export class DetalleParte implements OnInit {
   }
 
   borrarParte(): void {
-    this.parteService.deleteParte(Number(this.idUrl)).subscribe({
-      next: () => console.log("Parte borrado.")
-    });
-    this.router.navigate(['/listado-partes'])
+    const confirmar = confirm("¿Seguro que quieres borrar el parte?")
+    if (confirmar) {
+      this.parteService.deleteParte(Number(this.idUrl)).subscribe({
+        next: () => console.log("Parte borrado.")
+      });
+      this.router.navigate(['/listado-partes'])
+    }
   }
 }

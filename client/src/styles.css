@@ -1,6 +1,5 @@
 @import "tailwindcss";
 
-/* ═══════════ TUS COLORES SEMÁNTICOS (usando oklch = futuro-proof) ═══════════ */
 @theme {
   --color-primary: oklch(48% 0.25 260);
   --color-primary-hover: oklch(42% 0.25 260);

@@ -17,8 +17,7 @@ export class DetalleParte implements OnInit {
     { id: 'tecnico1', nombre: 'Juan Pérez' },
     { id: 'tecnico2', nombre: 'Ana Gómez' },
     { id: 'tecnico3', nombre: 'Carlos López' },
-    { id: 'tecnico4', nombre: 'María Rodríguez' },
-    { id: 'tecnico5', nombre: 'Ninguno' }
+    { id: 'tecnico4', nombre: 'María Rodríguez' }
   ];
 
   private route = inject(ActivatedRoute);
@@ -50,7 +49,14 @@ export class DetalleParte implements OnInit {
           const encontrado = lista.find((p: any) => p.id == this.idUrl);
 
           if (encontrado) {
+            // Conversión de urgente (ya existente)
             encontrado.urgente = (encontrado.urgente == 1 || encontrado.urgente === true);
+            
+            // --- CAMBIO: Lógica de auto-cierre igual que en el listado ---
+            if (encontrado.fecha_cierre) {
+              encontrado.estado = 'Cerrado';
+            }
+
             this.parte.set(encontrado);
           } else {
             console.error('❌ No se encontró el ID en la lista');
@@ -65,7 +71,6 @@ export class DetalleParte implements OnInit {
     this.router.navigate(['/listado-partes']);
   }
 
-  // --- CORREGIDO: Navega a la ruta de edición ---
   editar(): void {
     const p = this.parte();
     if (p && p.id) {

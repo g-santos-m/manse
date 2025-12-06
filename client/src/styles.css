@@ -16,7 +16,6 @@
   --color-info: oklch(65% 0.15 220);
 }
 
-/* Estilos base */
 @layer base {
   body {
     @apply bg-background text-text-primary min-h-screen antialiased;
@@ -25,10 +24,9 @@
   }
 }
 
-/* Tus clases reutilizables (ahora SÍ funcionan) */
 @layer components {
   .container {
-    @apply max-w-5xl mx-auto px-6 py-8;
+    @apply max-w-5xl mx-auto px-1 py-8;
   }
 
   .card {
@@ -51,7 +49,6 @@
     @apply bg-danger text-white hover:bg-[var(--color-danger-hover)];
   }
 
-  /* Badges */
   .badge {
     @apply inline-block px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider;
   }

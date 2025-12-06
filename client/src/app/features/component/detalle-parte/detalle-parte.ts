@@ -17,8 +17,7 @@ export class DetalleParte implements OnInit {
     { id: 'tecnico1', nombre: 'Juan Pérez' },
     { id: 'tecnico2', nombre: 'Ana Gómez' },
     { id: 'tecnico3', nombre: 'Carlos López' },
-    { id: 'tecnico4', nombre: 'María Rodríguez' },
-    { id: 'tecnico5', nombre: 'Ninguno' }
+    { id: 'tecnico4', nombre: 'María Rodríguez' }
   ];
 
   private route = inject(ActivatedRoute);

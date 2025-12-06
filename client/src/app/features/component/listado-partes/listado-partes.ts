@@ -19,7 +19,8 @@ export class ListadoPartes implements OnInit {
     { id: 'tecnico2', nombre: 'Ana Gómez' },
     { id: 'tecnico3', nombre: 'Carlos López' },
     { id: 'tecnico4', nombre: 'María Rodríguez' },
-    { id: 'tecnico5', nombre: 'Ninguno' }
+    // CAMBIO 1: Asignamos un ID especial 'ninguno' para identificar esta opción
+    { id: 'ninguno', nombre: 'Ninguno' }
   ];
 
   private parteService = inject(ParteService);
@@ -36,8 +37,6 @@ export class ListadoPartes implements OnInit {
   filtroFechaHasta: string | null = null;
   filtroTecnico: string | null = null;
 
-  // --- CAMBIO 1: Configuración por defecto al iniciar ---
-  // Antes estaba vacío (''), ahora ponemos 'id' y 'desc'
   columnaOrden: string = 'id';
   direccionOrden: 'asc' | 'desc' = 'desc';
 
@@ -49,7 +48,6 @@ export class ListadoPartes implements OnInit {
     this.parteService.getPartes().subscribe({
       next: (res) => {
         if(res.success) {
-          // Lógica de auto-cierre si tiene fecha
           this.parteTemp = res.data.map(parte => {
             if (parte.fecha_cierre) {
               return { ...parte, estado: 'Cerrado' };
@@ -57,7 +55,6 @@ export class ListadoPartes implements OnInit {
             return parte;
           });
           
-          // Al llamar a esto, ya usará 'id' y 'desc' definidos arriba
           this.aplicarFiltros(); 
         }
       },
@@ -81,7 +78,12 @@ export class ListadoPartes implements OnInit {
       const esUrgenteReal = !!p.urgente; 
       const coincideUrgente = this.filtroUrgente === null || esUrgenteReal === this.filtroUrgente;
       const coincideEstado = this.filtroEstado === null || p.estado === this.filtroEstado;
-      const coincideTecnico = this.filtroTecnico === null || p.tecnico === this.filtroTecnico;
+      
+      // CAMBIO 2: Lógica condicional para 'ninguno'
+      // Si el filtro es 'ninguno', devolvemos true si !p.tecnico (es decir null, undefined o vacio)
+      // Si es otro tecnico, comparamos normal.
+      const coincideTecnico = this.filtroTecnico === null || 
+        (this.filtroTecnico === 'ninguno' ? !p.tecnico : p.tecnico === this.filtroTecnico);
 
       const fechaParte = p.fecha_apertura ? new Date(p.fecha_apertura) : null;
       let coincideFecha = true;
@@ -102,8 +104,6 @@ export class ListadoPartes implements OnInit {
         if (valorA == null) valorA = '';
         if (valorB == null) valorB = '';
 
-        // Si son números (como el ID suele ser), esto funciona bien.
-        // Si son strings, los pasamos a minúsculas.
         if (typeof valorA === 'string') valorA = valorA.toLowerCase();
         if (typeof valorB === 'string') valorB = valorB.toLowerCase();
 
@@ -134,7 +134,6 @@ export class ListadoPartes implements OnInit {
     this.filtroFechaHasta = null;
     this.filtroTecnico = null;
     
-    // --- CAMBIO 2: Resetear al orden por defecto ---
     this.columnaOrden = 'id';
     this.direccionOrden = 'desc';
     

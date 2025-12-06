@@ -68,7 +68,7 @@ export class ListadoPartes implements OnInit {
     const fechaHasta = this.filtroFechaHasta ? new Date(this.filtroFechaHasta) : null;
     if (fechaHasta) fechaHasta.setHours(23, 59, 59, 999);
 
-    // 1. FILTRADO
+    // FILTRADO
     let resultado = this.parteTemp.filter(p => {
       const coincideTexto = !texto || 
         p.nombre_cliente?.toLowerCase().includes(texto) ||
@@ -79,7 +79,6 @@ export class ListadoPartes implements OnInit {
       const coincideUrgente = this.filtroUrgente === null || esUrgenteReal === this.filtroUrgente;
       const coincideEstado = this.filtroEstado === null || p.estado === this.filtroEstado;
       
-      // CAMBIO 2: Lógica condicional para 'ninguno'
       // Si el filtro es 'ninguno', devolvemos true si !p.tecnico (es decir null, undefined o vacio)
       // Si es otro tecnico, comparamos normal.
       const coincideTecnico = this.filtroTecnico === null || 
@@ -95,7 +94,7 @@ export class ListadoPartes implements OnInit {
       return coincideTexto && coincideUrgente && coincideEstado && coincideTecnico && coincideFecha;
     });
 
-    // 2. ORDENACIÓN
+    // ORDENACIÓN
     if (this.columnaOrden) {
       resultado.sort((a: any, b: any) => {
         let valorA = a[this.columnaOrden];

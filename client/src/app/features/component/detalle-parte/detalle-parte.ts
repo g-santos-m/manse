@@ -83,5 +83,6 @@ export class DetalleParte implements OnInit {
       next: () => console.log("Parte borrado.")
     });
     this.router.navigate(['/listado-partes'])
+    
   }
 }

@@ -7,7 +7,11 @@ Su objetivo es permitir la creación de partes de trabajo digitales, facilitando
 el registro y conservación de la información y facilitando la colaboración entre
 las distintas partes de la empresa (oficina, técnicos de campo, etc.).
 
-## Instalación
+## Requisitos previos
+- Node.js
+- Angular CLI
+
+## Instalación y ejecución
 
 Para instalar la app desde el código fuente, clonar el repositorio.
 ```
